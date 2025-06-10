@@ -1,1 +1,2 @@
 .env
+echo -e ".env\n__pycache__/\n*.pyc" > .gitignore

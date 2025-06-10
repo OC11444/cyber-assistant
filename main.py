@@ -16,6 +16,10 @@ app = typer.Typer()
 
 # Load your OpenAI API key from .env
 openai.api_key = os.getenv("OPENAI_API_KEY")
+from assistant.core import run_assistant
+
+if __name__ == "__main__":
+    run_assistant()
 
 
 def ask_gpt(prompt):
