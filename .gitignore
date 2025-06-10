@@ -1,6 +1,8 @@
-.env
-echo -e ".env\n__pycache__/\n*.pyc" > .gitignore
 venv/
 __pycache__/
 *.pyc
-.parrot-sounds/
+.parrotgpt.log
+*.wav
+*.mp3
+*.ogg
+
