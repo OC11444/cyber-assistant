@@ -6,3 +6,7 @@ __pycache__/
 *.mp3
 *.ogg
 
+.env
+*.log
+__pycache__/
+*.pyc
