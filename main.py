@@ -5,8 +5,21 @@ from dotenv import load_dotenv
 import openai
 from dotenv import load_dotenv
 import os
+from nova_voice.nova import speak_greeting
+import platform
 
-load_dotenv()  # Load environment variables from .env
+def play_audio(file_path):
+    system = platform.system()
+    if system == "Darwin":  # macOS
+        os.system(f"afplay '{file_path}'")
+    elif system == "Linux":
+        os.system(f"mpg123 '{file_path}'")
+    elif system == "Windows":
+        os.system(f'start /min wmplayer "{file_path}"')
+    else:
+        print("Audio playback not supported on this OS.")
+
+load_dotenv()
 
 api_key = os.getenv("OPENAI_API_KEY")
 
@@ -18,13 +31,9 @@ app = typer.Typer()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 from assistant.core import run_assistant
 
-if __name__ == "__main__":
-    run_assistant()
-
-
 def ask_gpt(prompt):
     response = openai.ChatCompletion.create(
-        model="gpt-4",  # Or "gpt-3.5-turbo"
+        model="gpt-4",
         messages=[
             {"role": "system", "content": "You're a cybersecurity assistant for Parrot OS. Help convert questions into Linux commands, recommend tools, and explain securely."},
             {"role": "user", "content": prompt}
@@ -48,5 +57,8 @@ def ask(question: str):
 
 
 if __name__ == "__main__":
+    audio_path = speak_greeting()
+    play_audio(audio_path)
+    run_assistant()
     app()
 

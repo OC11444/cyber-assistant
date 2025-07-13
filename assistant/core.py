@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 import openai
 from assistant.shell_tools import run_shell_command
+from nova_voice.voice_input import listen_for_command
 
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -9,7 +10,14 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 def run_assistant():
     print("🔒 Welcome to Parrot-GPT Assistant")
     while True:
-        user_input = input("You: ")
+        user_input = input("You (type 'voice' to use voice input): ")
+        if user_input.lower() == 'voice':
+            user_input = listen_for_command()
+            if user_input:
+                print(f"You (voice): {user_input}")
+            else:
+                continue
+
         if user_input.lower() in ["exit", "quit"]:
             break
         if user_input.startswith("!"):

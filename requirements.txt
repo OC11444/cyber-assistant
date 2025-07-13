@@ -38,4 +38,6 @@ urllib3==2.4.0
 yarl==1.20.1
 gTTS
 click
-
+vosk
+speechrecognition
+pyaudio
