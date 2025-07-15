@@ -7,7 +7,7 @@ load_dotenv()
 
 class AIAdapter:
     def __init__(self):
-        self.provider = os.getenv("AI_PROVIDER", "openai").lower()
+        self.provider = self.detect_llm()
         if self.provider == "openai":
             openai.api_key = os.getenv("OPENAI_API_KEY")
             if not openai.api_key:
@@ -18,7 +18,15 @@ class AIAdapter:
                 raise ValueError("GEMINI_API_KEY not found in .env for Gemini provider.")
             genai.configure(api_key=gemini_api_key)
         else:
-            raise ValueError("Invalid AI_PROVIDER. Must be 'openai' or 'gemini'.")
+            print("[❌] No valid LLM API key found. Please set GEMINI_API_KEY or OPENAI_API_KEY.")
+
+    def detect_llm(self):
+        if os.getenv("OPENAI_API_KEY"):
+            return "openai"
+        elif os.getenv("GEMINI_API_KEY"):
+            return "gemini"
+        else:
+            return "none"
 
     def chat_completion(self, messages, model=None, temperature=0.3, max_tokens=400):
         if self.provider == "openai":
@@ -48,6 +56,8 @@ class AIAdapter:
                 )
             )
             return response.text
+        else:
+            return "[❌] No valid LLM API key found. Please set GEMINI_API_KEY or OPENAI_API_KEY."
 
     def list_models(self):
         if self.provider == "gemini":
