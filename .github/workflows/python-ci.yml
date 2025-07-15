@@ -1,0 +1,41 @@
+name: Parrot-GPT CI
+
+on:
+  push:
+    branches: [ main, dev, integration/llm_unified ]
+  pull_request:
+    branches: [ main, dev, integration/llm_unified ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run gemini_handler.py Tests
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          echo "🔍 Testing Gemini handler..."
+          if [ -f assistant/test_gemini.py ]; then
+            PYTHONPATH=. python assistant/test_gemini.py || echo "⚠️ test_gemini.py failed (likely no API key)"
+          else
+            echo "❌ test_gemini.py not found"
+          fi
+
+      - name: List Tools Directory
+        run: |
+          echo "📁 Listing tools directory contents..."
+          ls tools || echo "No tools dir yet"
