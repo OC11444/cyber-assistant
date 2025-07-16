@@ -21,10 +21,9 @@ jobs:
           source venv/bin/activate
           pip install -r requirements.txt
 
-      - name: Run syntax check (flake8)
-        run: |
-          pip install flake8
-          flake8 . --exclude venv,__pycache__
+      - name: Run flake8
+        run: flake8 .
+          
 
       - name: Run test_gemini.py (basic CLI validation)
         run: |
