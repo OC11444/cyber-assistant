@@ -15,25 +15,19 @@ jobs:
         with:
           python-version: '3.11'
 
-
       - name: Install dependencies
         run: |
-             python -m venv venv
-             source venv/bin/activate
-             pip install --upgrade pip
-             pip install -r requirements.txt
-             pip install flake8  # <-- Add this line
-
-          
-
-      
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install flake8
 
       - name: Run flake8
         run: |
-         flake8 . --config=.flake8
-          
+          flake8 . --config=.flake8
 
       - name: Run test_gemini.py (basic CLI validation)
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
-          export GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
+          echo "✅ Running test_gemini.py..."
           PYTHONPATH=. python assistant/test_gemini.py
