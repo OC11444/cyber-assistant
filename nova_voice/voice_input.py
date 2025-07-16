@@ -1,3 +1,12 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from assistant.gemini_handler import get_gemini_response
+
+import dotenv
+dotenv.load_dotenv()
+
 import speech_recognition as sr
 import json
 from vosk import Model, KaldiRecognizer
@@ -22,9 +31,9 @@ def listen_for_command():
         return None
 
     print("[Nova Voice] ✅ Model found. Initializing...")
-
-    model = Model(MODEL_PATH)
-    recognizer = KaldiRecognizer(model, 16000)
+    with suppress_stderr():
+        model = Model(MODEL_PATH)
+        recognizer = KaldiRecognizer(model, 16000)
     r = sr.Recognizer()
 
     try:
@@ -58,8 +67,32 @@ def listen_for_command():
         print(f"[💥] Unknown error: {str(e)}")
         return None
 
+import sys
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # TensorFlow (if ever used)
+os.environ["PYTHONWARNINGS"] = "ignore"  # Hide warnings
+
+import contextlib
+
+@contextlib.contextmanager
+def suppress_stderr():
+    with open(os.devnull, 'w') as devnull:
+        old_stderr = sys.stderr
+        sys.stderr = devnull
+        try:
+            yield
+        finally:
+            sys.stderr = old_stderr
+
 # Manual test entry point for group development
 if __name__ == "__main__":
     print("🧪 Running standalone voice test...")
     text = listen_for_command()
     print(f"[🗣️] You said: {text}")
+
+    if text:
+        print("🤖 Sending to Gemini...")
+        gemini_reply = get_gemini_response(text)
+        print(f"[Gemini 🧠] {gemini_reply}")
+    else:
+        print("❌ No valid text received.")

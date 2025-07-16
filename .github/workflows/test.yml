@@ -1,0 +1,32 @@
+name: Syntax & Unit Tests
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+
+      - name: Run syntax check (flake8)
+        run: |
+          pip install flake8
+          flake8 . --exclude venv,__pycache__
+
+      - name: Run test_gemini.py (basic CLI validation)
+        run: |
+          export GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
+          PYTHONPATH=. python assistant/test_gemini.py
