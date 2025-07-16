@@ -2,6 +2,7 @@ from gtts import gTTS
 import os
 from nova_voice.greetings import get_greeting
 
+
 def speak_greeting():
     text = get_greeting()
     print(f"[Nova] Speaking: {text}")

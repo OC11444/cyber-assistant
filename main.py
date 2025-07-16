@@ -1,4 +1,4 @@
-#====imports =======
+# ====imports =======
 import os
 import platform
 import typer
@@ -17,18 +17,32 @@ load_dotenv()
 app = typer.Typer(help="Parrot-GPT: Your Cybersecurity Assistant for Parrot OS")
 ai_adapter = AIAdapter()
 
+
 # === Audio Playback ===
 def play_audio(file_path):
+    """
+    Plays an audio file depending on the OS.
+    """
     system = platform.system()
     if system == "Darwin":
         os.system(f"afplay '{file_path}'")
     elif system == "Linux":
         os.system(f"mpg123 '{file_path}'")
     elif system == "Windows":
-        os.system(f'start /min wmplayer \"{file_path}\"')
+        os.system(f'start /min wmplayer "{file_path}"')
+
 
 # === LLM Prompting ===
 def ask_gpt(prompt):
+    """
+    Sends a prompt to the LLM and returns the response.
+
+    Args:
+        prompt (str): The user input to send to the LLM.
+
+    Returns:
+        str: The LLM's reply as a formatted string.
+    """
     messages = [
         {
             "role": "system",
@@ -47,8 +61,18 @@ def ask_gpt(prompt):
     ]
     return ai_adapter.chat_completion(messages)
 
+
 # === Extract Numbered Commands ===
 def extract_command_list(response: str) -> list[str]:
+    """
+    Extracts numbered command lines from GPT's response.
+
+    Args:
+        response (str): LLM response.
+
+    Returns:
+        list[str]: List of commands extracted.
+    """
     commands = []
     for line in response.splitlines():
         if line.strip().startswith(tuple(str(i) + "." for i in range(1, 10))):
@@ -57,20 +81,37 @@ def extract_command_list(response: str) -> list[str]:
                 commands.append(parts[1].strip())
     return commands
 
+
 # === Execute Command ===
 def execute_shell(command: str) -> str:
+    """
+    Executes a command with sudo and returns its output.
+
+    Args:
+        command (str): Shell command to execute.
+
+    Returns:
+        str: Output from the shell command.
+    """
     typer.secho(f"\n[💻] Running: {command}", fg=typer.colors.CYAN)
     try:
-        result = subprocess.run(["sudo"] + command.split(), capture_output=True, text=True)
+        result = subprocess.run(
+            ["sudo"] + command.split(), capture_output=True, text=True
+        )
         return result.stdout or result.stderr
     except Exception as e:
         return f"[❌] Execution failed: {str(e)}"
 
+
 # === CLI Entry ===
 @app.command()
 def start():
+    """
+    Main assistant command. Handles mode selection and prompt execution.
+    """
     typer.echo("🧠 Welcome to Parrot-GPT!")
     mode = typer.prompt("Choose input mode (text/voice) [default: text]").strip().lower()
+
     if not mode:
         mode = "text"
     if mode not in ("text", "voice"):
@@ -106,13 +147,17 @@ def start():
 
     # Execute and explain
     output = execute_shell(command)
-    explanation_prompt = f"The command `{command}` returned:\n\n{output}\n\nExplain this clearly."
+    explanation_prompt = (
+        f"The command `{command}` returned:\n\n{output}\n\nExplain this clearly."
+    )
     explanation = ask_gpt(explanation_prompt)
     typer.secho(f"\n📘 GPT Explains:\n{explanation}", fg=typer.colors.GREEN)
+
 
 # === Launch Fallback ===
 if __name__ == "__main__":
     import sys
+
     if len(sys.argv) == 1:
         audio_path = speak_greeting()
         play_audio(audio_path)
