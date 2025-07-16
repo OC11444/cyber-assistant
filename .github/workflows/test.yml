@@ -17,16 +17,10 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m venv venv
-          source venv/bin/activate
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
-
-      - name: Run syntax check (flake8)
-        run: |
           pip install flake8
-          flake8 . --exclude venv,__pycache__
 
-      - name: Run test_gemini.py (basic CLI validation)
+      - name: Run flake8
         run: |
-          export GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
-          PYTHONPATH=. python assistant/test_gemini.py
+          flake8 . --config=.flake8

@@ -15,6 +15,9 @@ _model = None
 
 
 def get_available_model():
+    """
+    Scans for preferred Gemini models and returns the first usable one.
+    """
     print("🔍 Scanning for available Gemini models...")
     for model in genai.list_models():
         if "generateContent" in model.supported_generation_methods:
@@ -25,6 +28,15 @@ def get_available_model():
 
 
 def get_gemini_response(prompt: str) -> str:
+    """
+    Uses Gemini to respond to a given prompt. Falls back to 1.5-flash on failure.
+
+    Args:
+        prompt (str): The prompt string.
+
+    Returns:
+        str: LLM's response or error message.
+    """
     global _model
     try:
         if not _model:

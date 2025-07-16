@@ -1,5 +1,6 @@
 from datetime import datetime
 
+
 def get_greeting():
     current_hour = datetime.now().hour
     if current_hour < 12:

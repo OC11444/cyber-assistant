@@ -1,25 +1,21 @@
+# voice_input.py
+
+import contextlib
+from vosk import Model, KaldiRecognizer
+import json
+import speech_recognition as sr
+import dotenv
+from assistant.gemini_handler import get_gemini_response
 import sys
 import os
+
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
-from assistant.gemini_handler import get_gemini_response
-
-import dotenv
 dotenv.load_dotenv()
 
-import speech_recognition as sr
-import json
-from vosk import Model, KaldiRecognizer
-import os
-#vosk model path
-# Ensure you have the Vosk model downloaded and placed in the correct path
-# You can download a model from https://alphacephei.com/vosk/models
-# Example model path: "vosk-model-small-en-us-0.15".
+# vosk model path
 MODEL_PATH = "vosk-model-small-en-us-0.15"
-# Function to listen for voice commands using Vosk and SpeechRecognition
-# This function initializes the Vosk model, listens for audio input from the microphone,
-# and processes the audio to return the recognized text.
-# It handles errors gracefully and provides feedback on the recognition process.
+
+
 def listen_for_command():
     """
     Listens for voice using Vosk and SpeechRecognition.
@@ -46,7 +42,8 @@ def listen_for_command():
             audio = r.listen(source, timeout=5, phrase_time_limit=10)
             print("[📡] Captured audio. Processing...")
 
-            audio_data = audio.get_raw_data(convert_rate=16000, convert_width=2)
+            audio_data = audio.get_raw_data(
+                convert_rate=16000, convert_width=2)
 
             if recognizer.AcceptWaveform(audio_data):
                 result = json.loads(recognizer.Result())
@@ -67,12 +64,10 @@ def listen_for_command():
         print(f"[💥] Unknown error: {str(e)}")
         return None
 
-import sys
-import os
+
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # TensorFlow (if ever used)
 os.environ["PYTHONWARNINGS"] = "ignore"  # Hide warnings
 
-import contextlib
 
 @contextlib.contextmanager
 def suppress_stderr():
@@ -83,6 +78,7 @@ def suppress_stderr():
             yield
         finally:
             sys.stderr = old_stderr
+
 
 # Manual test entry point for group development
 if __name__ == "__main__":
