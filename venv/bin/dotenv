@@ -1,4 +1,4 @@
-#!/home/james-is-a-dev/Desktop/parrot-gpt-assistant/venv/bin/python3
+#!/home/west/parrot-gpt-assistant/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

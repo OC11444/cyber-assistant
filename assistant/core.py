@@ -1,30 +1,36 @@
-import os
-from dotenv import load_dotenv
-import openai
-from assistant.shell_tools import run_shell_command
+# assistant/core.py
 
-load_dotenv()
-openai.api_key = os.getenv("OPENAI_API_KEY")
+import shutil
+import os
+
+TOOLS = [
+    "nmap",
+    "sqlmap",
+    "john",
+    "whois",
+    "hydra",
+    "curl",
+    "ping"
+]
+
+def check_tool(tool_name):
+    return shutil.which(tool_name) is not None
 
 def run_assistant():
-    print("🔒 Welcome to Parrot-GPT Assistant")
-    while True:
-        user_input = input("You: ")
-        if user_input.lower() in ["exit", "quit"]:
-            break
-        if user_input.startswith("!"):
-            output = run_shell_command(user_input[1:])
-            print(f"Shell: {output}")
-            continue
-        try:
-            response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
-                messages=[
-                    {"role": "system", "content": "You are a shell-savvy cybersecurity assistant on Parrot OS."},
-                    {"role": "user", "content": user_input}
-                ]
-            )
-            reply = response['choices'][0]['message']['content']
-            print(f"🤖 Parrot-GPT: {reply}")
-        except Exception as e:
-            print(f"Error: {e}")
+    print("\n🔧 [System Check] Verifying required tools...\n")
+
+    missing = []
+    for tool in TOOLS:
+        if check_tool(tool):
+            print(f"[✔️] {tool} is installed.")
+        else:
+            print(f"[❌] {tool} is missing.")
+            missing.append(tool)
+
+    if missing:
+        print("\n⚠️ Some tools are missing:")
+        for tool in missing:
+            print(f"   - {tool} → To install: `sudo apt install {tool}`")
+        print("\n🔐 Please install the missing tools before using related features.")
+    else:
+        print("\n✅ All required tools are available. You're good to go!\n")

@@ -10,3 +10,14 @@ __pycache__/
 *.log
 __pycache__/
 *.pyc
+.env
+
+
+__pycache__/
+*.pyc
+testenv/
+*.env
+*.log
+*.mp3
+*.wav
+*.sqlite3
