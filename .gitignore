@@ -21,3 +21,5 @@ testenv/
 *.mp3
 *.wav
 *.sqlite3
+tests/
+tests/
