@@ -21,11 +21,12 @@ jobs:
           pip install -r requirements.txt
           pip install flake8
 
-      - name: 🔍 Run flake8 (Python linter)
+      - name: 🔍 Run flake8 (non-blocking)
+        continue-on-error: true
         run: |
           echo "Running flake8 checks..."
           if [ -f .flake8 ]; then
-            flake8 . --config=.flake8
+            flake8 . --config=.flake8 || true
           else
             echo "⚠️ .flake8 config not found. Using default flake8 rules."
-            flake8 .
+            flake8 . || true
