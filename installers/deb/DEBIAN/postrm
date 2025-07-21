@@ -1,0 +1,5 @@
+#!/bin/bash
+echo "[🧼] Parrot-GPT has been fully removed from your system."
+
+# Optional: remove config/logs if you plan to store them in future
+# rm -rf ~/.parrot-gpt

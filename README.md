@@ -1,166 +1,161 @@
-# 🦜 Parrot GPT Assistant
+# 🧠 Parrot-GPT Assistant
 
-**Parrot GPT Assistant** is an intelligent, voice-enabled terminal companion built for **Parrot OS**. Designed for cybersecurity learners, ethical hackers, and Linux tinkerers, it blends AI, shell interaction, and offline voice synthesis into a hacking-friendly experience. Nova is not just a voice — it’s your first mate in the terminal.
-
-![Nova Voice Terminal Banner](https://i.imgur.com/VYYjMue.png)
+Parrot-GPT is a **cybersecurity-focused voice & text assistant** built for Parrot OS. It blends **ethical hacking** capabilities with **AI intelligence** — powered by OpenAI and Gemini — all within a terminal-friendly experience. Whether you're a CTF hacker, student, or ethical pentester, this assistant is designed to **educate, automate, and elevate** your terminal workflows.  
 
 ---
 
-## 🎯 Key Features
-
-### 🎙️ Voice-Activated Boot Greeting
-
-> Nova greets you with a custom voice message every time you launch your virtual machine.
-
-### 🧠 GPT-Like Terminal Intelligence
-
-> Ask Nova to explain commands, give security tips, or walk you through tool usage.
-
-### 🛠️ Built-In Tool Guides
-
-> From reconnaissance to exploitation, Nova helps with:
-
-* `nmap`
-* `sqlmap`
-* `john`
-* `metasploit`
-
-### ⚙️ Modular Hacking Support
-
-> Specialized modules for:
-
-* Malware analysis
-* Hash cracking
-* Cipher decoding
-* SQL Injection
-* OSINT lookups
-
-### 🐚 Shell Integration
-
-> Execute shell commands with contextual help, feedback, and suggestions.
-
----
-
-## 🧱 Project Structure
-
-```
-parrot-gpt-assistant/
-├── assistant/            # Core logic & terminal interactions
-├── nova_voice/           # Voice greeting engine (Nova)
-├── tools/                # Custom hacking modules
-├── guides/               # Markdown tutorials for popular tools
-├── shell_interface.py    # Connects Nova to your shell
-├── run_nova.py           # Greets user at startup
-├── sounds/               # Nova's .wav & voice files
-├── venv/                 # Python virtual environment
-└── README.md             # Project documentation
-```
-
----
-
-## 🚀 Getting Started
-
-### 🔧 1. Clone the Repo
+## 🗂️ Project Structure
 
 ```bash
-git clone https://github.com/your-username/parrot-gpt-assistant.git
-cd parrot-gpt-assistant
-```
+.
+├── adapters/           # 🧩 Input methods (text/voice)
+├── assistant/          # 🧠 AI adapters and logic
+├── nova_voice/         # 🎤 Voice recognition via Vosk
+├── tools/              # 🛠️ Hacking utilities
+├── scripts/            # ⚙️ Automation scripts (coming soon)
+├── requirements/       # 📦 Dependencies per OS
+├── installers/         # 🧰 Cross-platform launchers
+├── docs/               # 📚 Guides, docs, and architecture
+├── tests/              # ✅ Unit tests
+├── guides/             # 🔐 Cybersecurity usage how-tos
+├── main.py             # 🚀 Entry point
+└── README.md           # 📖 This file
 
-### 🧪 2. Set Up the Virtual Environment
+🚀 Core Features
 
-```bash
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-```
+✨ Clean Terminal UI with Numbered Options
+🧠 Multi-AI Support (Gemini + OpenAI)
+🎙️ Vosk-Powered Voice Input
+🧪 DEMO Mode — No API Key Needed
+💬 Shell Command Suggestions
+📘 AI Explains the Output
+🔐 Built-in Ethical Tools:
 
-### ▶️ 3. Run Nova
+    Password cracking
 
-```bash
-python run_nova.py
-```
+    SQL Injection
 
-Nova will greet you with a custom voice intro.
+    Info gathering
 
----
+    Malware analysis
 
-## 🔊 Make Nova Greet You on VM Boot
+🧪 DEMO Mode (For Judges & Offline Use)
 
-### Step 1: Create a Startup Script
+🔍 No API Key Required. Everything is simulated.
 
-```bash
-nano ~/start_nova.sh
-```
+    Copy the example config:
 
-Paste this:
+cp .env.example .env
 
-```bash
-#!/bin/bash
-cd ~/Desktop/parrot-gpt-assistant
-source venv/bin/activate
-python run_nova.py
-```
+    Set DEMO mode in your .env:
 
-Make it executable:
+DEMO_MODE=true
 
-```bash
-chmod +x ~/start_nova.sh
-```
+    Run the assistant:
 
-### Step 2: Add to System Startup
+python3 main.py
 
-**For XFCE or MATE**:
+✅ You will enter interactive simulation mode — no network access, but full voice/text input and mocked results for testing.
 
-* Go to **Session and Startup** > **Application Autostart**
-* Click **Add**
+📸 Insert screenshot of demo mode startup
+📸 Insert screenshot of command suggestion & mock explanation
+🤖 LIVE AI Mode (Real GPT + Gemini)
 
-  * **Name**: Nova
-  * **Command**: `/home/your-username/start_nova.sh`
+Enable real-time AI command generation using LLMs:
 
----
+    Add your keys in .env:
 
-## 👥 Target Users
+GEMINI_API_KEY=your_key
+OPENAI_API_KEY=your_key
+DEMO_MODE=false
 
-* Cybersecurity students
-* Penetration testers
-* Ethical hackers
-* Parrot OS power users
-* AI + Linux automation enthusiasts
+    Run:
 
----
+python3 main.py
 
-## 🔉 Voice Engine
+💡 Choose between text or voice input dynamically.
 
-Nova uses `pyttsx3` for local, offline speech synthesis. You can extend it with:
+📸 Insert screenshot of live LLM output and explanation
+💬 Sample Prompts (Work in Both Modes)
 
-* Emotion-aware greetings
-* Custom voices
-* .wav overlays for audio personality
+Prompt:
 
----
+    scan open ports on 127.0.0.1
 
-## 🔮 Future Possibilities
+Response:
 
-* Interactive chat-style mode in terminal
-* Real-time alerts from logs or scans
-* Integration with TryHackMe, HackTheBox
-* Web panel + API control for remote Nova instances
+🤖 Choose one to run:
+1. nmap -sV 127.0.0.1
+2. sudo nmap -A 127.0.0.1
+3. rustscan -a 127.0.0.1 -- -sV -sC
 
----
+Prompt:
 
-## 📜 License
+    crack password hash using john
 
-**MIT License** – Free to use, modify, and distribute. Credit appreciated.
+Response:
 
----
+🤖 Choose one to run:
+1. john --wordlist=/usr/share/wordlists/rockyou.txt hashes.txt
+2. john --incremental --format=raw-md5 hashes.txt
 
-## ✨ Acknowledgements
+Prompt:
 
-* 🐧 **Parrot OS** – For a powerful ethical hacking environment
-* 🧠 **OpenAI** – For inspiring natural language intelligence
-* 🧑‍💻 **You** – For pushing the boundaries of what's possible in your terminal
+    enumerate SQL injection using sqlmap
 
-> "Not just a script. Not just a voice. It's your cyber companion."
-> — *Nova the Assistant* ✨🦜
+Response:
 
+🤖 Choose one:
+1. sqlmap -u "http://target.com/index.php?id=1" --dbs
+2. sqlmap -r request.txt --batch --risk=3 --level=5
+
+📘 Mock explanations are simple, clear, and technical enough for judges & users.
+🌈 Coming Soon — UI/UX Customizations
+
+🎨 Terminal Themes
+🌀 Shell Animations
+⚙️ Command History Replays
+🧩 Plugin Tool Support (Wireshark, Metasploit, etc.)
+🌐 Language Packs & Accessibility Options
+🔐 Ethical Use Policy
+
+🚨 Parrot-GPT is built for legal, educational, and ethical testing only.
+
+Using this on unauthorized systems is illegal and violates Parrot-GPT’s terms of use.
+Always ensure you have explicit permission when conducting tests.
+📈 Scalability Vision
+
+✅ Fully containerizable (Docker, Podman)
+✅ .deb packaging (coming soon)
+✅ Cross-platform installers for Linux, Debian, Mac
+🔧 Auto-detects voice/text input mode
+📡 Works offline in Demo Mode — perfect for isolated VMs
+📸 Screenshots (To Be Added)
+
+✅ DEMO Mode: Welcome + command options
+
+✅ DEMO Mode: Mocked output & explanation
+
+✅ LIVE Mode: Real GPT response
+
+✅ Voice Input Interaction
+
+    ✅ Text Input Flow
+
+📁 Place screenshots in the /docs/screenshots/ folder and link them here.
+🧪 Testing
+
+Run all tests using:
+
+pytest tests/
+
+🧰 Built With
+
+❤️ Parrot OS Security Edition
+🤖 OpenAI + Gemini
+🎤 Vosk STT
+🐍 Python 3.11+
+🖼️ Terminal Art + Typer + Shell
+📄 License
+
+MIT — see LICENSE

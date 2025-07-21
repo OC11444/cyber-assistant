@@ -1,7 +1,6 @@
 import subprocess
 import typer
 
-
 def execute_shell_command(command: str):
     typer.echo("\n💻 Executing command...\n")
     try:
@@ -18,3 +17,8 @@ def explain_command(command: str):
     typer.echo("\n📘 Explanation (AI-generated coming soon):")
     typer.echo(
         "For now, manually verify the command before running. Auto explanations will be added next.")
+
+
+def run_final_command(command: str):
+    execute_shell_command(command)
+    explain_command(command)
