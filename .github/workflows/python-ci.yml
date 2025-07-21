@@ -1,4 +1,4 @@
-name: Parrot-GPT CI
+name: CI Pipeline
 
 on:
   push:
@@ -12,20 +12,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: 📥 Checkout Code
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: 🐍 Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Install Dependencies
+      - name: 📦 Install Dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run Gemini Handler Test
+      - name: 🔍 Run Gemini Handler Test
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
@@ -36,7 +36,7 @@ jobs:
             echo "❌ test_gemini.py not found"
           fi
 
-      - name: Run OpenAI Handler Test (Optional)
+      - name: 🤖 Run OpenAI Handler Test (Optional)
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
@@ -47,7 +47,7 @@ jobs:
             echo "❌ test_openai.py not found"
           fi
 
-      - name: List Tools Directory
+      - name: 📁 List Tools Directory
         run: |
           echo "📁 Listing tools directory contents..."
-          ls tools || echo "⚠️ No tools dir yet (waiting for Wisdom)"
+          ls tools || echo "⚠️ No tools dir yet (waiting for tools)"

@@ -35,8 +35,7 @@ jobs:
             echo "⚠️ No requirements.txt found, skipping install."
           fi
 
-      # 🧪 4. Run in DEMO mode
+      # 🧪 4. Run in DEMO mode (simulate input to avoid hanging in CI)
       - name: ✅ Run Assistant in DEMO Mode
         run: |
-          echo "🧪 Starting Parrot-GPT in DEMO mode..."
-          python main.py --demo
+          echo "show tools" | python main.py --demo

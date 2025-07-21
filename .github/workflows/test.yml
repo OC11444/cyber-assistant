@@ -29,4 +29,3 @@ jobs:
           else
             echo "⚠️ .flake8 config not found. Using default flake8 rules."
             flake8 .
-          fi
