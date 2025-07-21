@@ -5,4 +5,4 @@ requests
 rich
 shellingham
 typer
-voskgoogle-generativeai
+vosk
