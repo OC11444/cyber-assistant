@@ -1,5 +1,5 @@
 
-# ====imports =======
+# ====imports =========
 import os
 import platform
 import typer
@@ -18,7 +18,7 @@ from shell_interface import execute_shell_command, explain_command
 load_dotenv()
 app = typer.Typer(help="Parrot-GPT: Your Cybersecurity Assistant for Parrot OS")
 
-# ✅ Allow --demo to pass silently to sys.argv
+# ✅ Allow --demo to pass silently to sys.argv use python main.py --demo
 @app.callback(invoke_without_command=True)
 def main_callback(ctx: typer.Context):
     ctx.allow_extra_args = True
