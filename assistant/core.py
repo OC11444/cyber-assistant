@@ -1,57 +1,93 @@
-# assistant/core.py
-# This module verifies if essential tools for the assistant (e.g. nmap, sqlmap) are installed.
+import os
+import sys
+import openai
+import google.generativeai as genai
+from dotenv import load_dotenv
 
-import shutil
-import os  # retained intentionally for future expansion or tool detection enhancements
+load_dotenv()
 
-# List of external tools required by the assistant
-TOOLS = [
-    "nmap",
-    "sqlmap",
-    "john",
-    "whois",
-    "hydra",
-    "curl",
-    "ping",
-]
+# 🧪 Check if running in DEMO mode via env (set in main.py)
+DEMO_MODE = os.getenv("DEMO_MODE") == "true"
 
+class AIAdapter:
+    def __init__(self):
+        if DEMO_MODE:
+            self.provider = "demo"
+            print("[🧪 DEMO] AIAdapter initialized in DEMO mode.")
+            return
 
-def check_tool(tool_name):
-    """
-    Check if a given tool is available in the system's PATH.
+        self.provider = self.detect_llm()
 
-    Args:
-        tool_name (str): Name of the tool to check.
+        if self.provider == "openai":
+            openai.api_key = os.getenv("OPENAI_API_KEY")
+            if not openai.api_key:
+                raise ValueError("OPENAI_API_KEY not found in .env for OpenAI provider.")
 
-    Returns:
-        bool: True if the tool exists, False otherwise.
-    """
-    return shutil.which(tool_name) is not None
+        elif self.provider == "gemini":
+            gemini_api_key = os.getenv("GEMINI_API_KEY")
+            if not gemini_api_key:
+                raise ValueError("GEMINI_API_KEY not found in .env for Gemini provider.")
+            genai.configure(api_key=gemini_api_key)
 
-
-def run_assistant():
-    """
-    Verifies that all required tools are installed on the system.
-    Prints the status of each tool and provides installation hints if missing.
-    """
-    print("\n🔧 [System Check] Verifying required tools...\n")
-
-    missing = []
-
-    for tool in TOOLS:
-        if check_tool(tool):
-            print(f"[✔️] {tool} is installed.")
         else:
-            print(f"[❌] {tool} is missing.")
-            missing.append(tool)
+            print("[❌] No valid LLM API key found. Please set GEMINI_API_KEY or OPENAI_API_KEY.")
 
-    if missing:
-        print("\n⚠️ Some tools are missing:")
-        for tool in missing:
-            print(f"   - {tool} → To install: `sudo apt install {tool}`")
+    def detect_llm(self):
+        if os.getenv("OPENAI_API_KEY"):
+            return "openai"
+        elif os.getenv("GEMINI_API_KEY"):
+            return "gemini"
+        else:
+            return "none"
 
-        print(
-            "\n🔐 Please install the missing tools before using related features."
-        )
-    else:
-        print("\n✅ All required tools are available. You're good to go!\n")
+    def chat_completion(self, messages, model=None, temperature=0.3, max_tokens=400):
+        if DEMO_MODE:
+            return "[🧪 DEMO] Mock response: Here are 3 fake commands:\n1. ls -la\n2. whoami\n3. ping parrot.sh"
+
+        if self.provider == "openai":
+            if model is None:
+                model = "gpt-4"
+            response = openai.ChatCompletion.create(
+                model=model,
+                messages=messages,
+                temperature=temperature,
+                max_tokens=max_tokens,
+            )
+            return response["choices"][0]["message"]["content"].strip()
+
+        elif self.provider == "gemini":
+            if model is None:
+                model = "models/gemini-2.5-pro"
+
+            gemini_messages = []
+            for msg in messages:
+                role = "user" if msg["role"] == "user" else "model"
+                gemini_messages.append({"role": role, "parts": [msg["content"]]})
+
+            model_instance = genai.GenerativeModel(model)
+            response = model_instance.generate_content(
+                gemini_messages,
+                generation_config=genai.types.GenerationConfig(
+                    temperature=temperature,
+                    max_output_tokens=10000,
+                ),
+            )
+            return response.text
+
+        else:
+            return "[❌] No valid LLM API key found. Please set GEMINI_API_KEY or OPENAI_API_KEY."
+
+    def list_models(self):
+        if DEMO_MODE:
+            print("[🧪 DEMO] Model listing skipped in demo mode.")
+            return
+
+        if self.provider == "gemini":
+            print("Attempting to list Gemini models...")
+            for m in genai.list_models():
+                print(
+                    f"  Name: {m.name}, "
+                    f"Supported Generation Methods: {m.supported_generation_methods}"
+                )
+        else:
+            print("Model listing is only implemented for Gemini provider.")

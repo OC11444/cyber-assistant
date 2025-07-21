@@ -24,3 +24,6 @@ testenv/
 tests/
 tests/
 *.pyc
+.env
+venv/
+installers/deb/parrot-gpt.deb

@@ -8,6 +8,8 @@ import dotenv
 from assistant.gemini_handler import get_gemini_response
 import sys
 import os
+import queue
+import threading
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 dotenv.load_dotenv()
@@ -26,8 +28,7 @@ def listen_for_command():
         print("[❌] Vosk model not found at:", MODEL_PATH)
         return None
 
-    print("[Nova Voice] ✅ Model found. Initializing...")
-    with suppress_stderr():
+    with suppress_stdout(), suppress_stderr():
         model = Model(MODEL_PATH)
         recognizer = KaldiRecognizer(model, 16000)
     r = sr.Recognizer()
@@ -35,24 +36,42 @@ def listen_for_command():
     try:
         with sr.Microphone() as source:
             print("[🎙️] Calibrating mic for ambient noise...")
-            r.adjust_for_ambient_noise(source, duration=1)
-            print(f"[⚙️] Energy threshold set to: {r.energy_threshold}")
+            with suppress_stdout(), suppress_stderr():
+                r.adjust_for_ambient_noise(source, duration=1)
 
             print("[🎤] Listening... Speak clearly now.")
-            audio = r.listen(source, timeout=5, phrase_time_limit=10)
-            print("[📡] Captured audio. Processing...")
 
-            audio_data = audio.get_raw_data(
-                convert_rate=16000, convert_width=2)
+            audio_queue = queue.Queue()
 
-            if recognizer.AcceptWaveform(audio_data):
-                result = json.loads(recognizer.Result())
-                print("[✅] Final result:", result)
-                return result['text']
+            def capture_audio():
+                try:
+                    audio = r.listen(source, timeout=5, phrase_time_limit=10)
+                    audio_queue.put(audio)
+                except Exception as e:
+                    audio_queue.put(e)
+
+            listener_thread = threading.Thread(target=capture_audio)
+            listener_thread.start()
+            listener_thread.join(timeout=12)
+
+            if not audio_queue.empty():
+                audio = audio_queue.get()
+                if isinstance(audio, Exception):
+                    raise audio
             else:
-                result = json.loads(recognizer.PartialResult())
-                print("[⚠️] Partial result:", result)
-                return result.get('partial', '')
+                print("[⏱️] Listening timed out.")
+                return None
+
+            with suppress_stdout(), suppress_stderr():
+                audio_data = audio.get_raw_data(convert_rate=16000, convert_width=2)
+
+                if recognizer.AcceptWaveform(audio_data):
+                    result = json.loads(recognizer.Result())
+                    print("[🗣️] You said:", result['text'])
+                    return result['text']
+                else:
+                    result = json.loads(recognizer.PartialResult())
+                    return result.get('partial', '')
 
     except sr.UnknownValueError:
         print("[❌] Could not understand audio")
@@ -65,8 +84,8 @@ def listen_for_command():
         return None
 
 
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # TensorFlow (if ever used)
-os.environ["PYTHONWARNINGS"] = "ignore"  # Hide warnings
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+os.environ["PYTHONWARNINGS"] = "ignore"
 
 
 @contextlib.contextmanager
@@ -78,6 +97,16 @@ def suppress_stderr():
             yield
         finally:
             sys.stderr = old_stderr
+
+@contextlib.contextmanager
+def suppress_stdout():
+    with open(os.devnull, 'w') as devnull:
+        old_stdout = sys.stdout
+        sys.stdout = devnull
+        try:
+            yield
+        finally:
+            sys.stdout = old_stdout
 
 
 # Manual test entry point for group development
