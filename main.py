@@ -1,4 +1,3 @@
-
 # ====imports =========
 import os
 import platform
@@ -168,6 +167,17 @@ def execute_shell(command: str) -> str:
         return f"[❌] Execution failed: {str(e)}"
 
 
+# === Safe Prompt (CI fallback) ===
+def safe_prompt(prompt_text: str, default: str = "text") -> str:
+    try:
+        if not sys.stdin.isatty():
+            typer.secho(f"[⚠️  No TTY] Defaulting to '{default}' mode.", fg=typer.colors.YELLOW)
+            return default
+        return typer.prompt(prompt_text).strip().lower()
+    except (EOFError, typer.Abort):
+        return default
+
+
 # === CLI Entry ===
 @app.command()
 def start():
@@ -184,7 +194,7 @@ def start():
     typer.echo("\n🧠 Welcome to Parrot-GPT! Your AI Cybersecurity Assistant 🛡️")
 
     while True:
-        mode = typer.prompt("🎙️ Choose input mode (text/voice) [default: text]").strip().lower()
+        mode = safe_prompt("🎙️ Choose input mode (text/voice) [default: text]", default="text")
         if not mode:
             mode = "text"
         if mode not in ("text", "voice"):
