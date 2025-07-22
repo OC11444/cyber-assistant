@@ -257,6 +257,11 @@ def start():
 
         typer.secho(f"\n📘 GPT Explains:\n{explanation}", fg=typer.colors.GREEN)
 
+        # ✅ Exit early during CI to prevent infinite loop
+        if not sys.stdin.isatty():
+            typer.secho("\n✅ CI test run complete. Exiting loop.", fg=typer.colors.YELLOW)
+            break
+
 
 # === Launch Fallback ===
 if __name__ == "__main__":
