@@ -20,6 +20,12 @@ jobs:
         with:
           python-version: '3.11'
 
+      # 🛠️ Install System Dependencies (for PyAudio)
+      - name: 🛠️ Install System Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y portaudio19-dev
+
       - name: 📦 Install Dependencies
         run: |
           python -m pip install --upgrade pip

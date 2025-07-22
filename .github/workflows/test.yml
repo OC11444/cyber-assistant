@@ -15,6 +15,7 @@ jobs:
         with:
           python-version: '3.11'
 
+      # 🛠️ Install System Dependencies (for PyAudio)
       - name: 🛠️ Install System Dependencies (for PyAudio)
         run: |
           sudo apt-get update
