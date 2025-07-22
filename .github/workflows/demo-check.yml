@@ -24,6 +24,12 @@ jobs:
         with:
           python-version: '3.10'
 
+      # 🛠️ 2.5 Install system dependencies (e.g., for PyAudio)
+      - name: 🛠️ Install System Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y portaudio19-dev
+
       # 📦 3. Install dependencies
       - name: 📦 Install Dependencies
         run: |
@@ -35,8 +41,7 @@ jobs:
             echo "⚠️ No requirements.txt found, skipping install."
           fi
 
-      # 🧪 4. Run in DEMO mode
+      # 🧪 4. Run in DEMO mode (simulate input to avoid hanging in CI)
       - name: ✅ Run Assistant in DEMO Mode
         run: |
-          echo "🧪 Starting Parrot-GPT in DEMO mode..."
-          python main.py --demo
+          echo "show tools" | python main.py --demo

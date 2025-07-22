@@ -1,5 +1,4 @@
-#!/usr/bin/env python3
-# ====imports =======
+# ====imports =========
 import os
 import platform
 import typer
@@ -18,7 +17,7 @@ from shell_interface import execute_shell_command, explain_command
 load_dotenv()
 app = typer.Typer(help="Parrot-GPT: Your Cybersecurity Assistant for Parrot OS")
 
-# ✅ Allow --demo to pass silently to sys.argv
+# ✅ Allow --demo to pass silently to sys.argv use python main.py --demo
 @app.callback(invoke_without_command=True)
 def main_callback(ctx: typer.Context):
     ctx.allow_extra_args = True
@@ -168,6 +167,17 @@ def execute_shell(command: str) -> str:
         return f"[❌] Execution failed: {str(e)}"
 
 
+# === Safe Prompt (CI fallback) ===
+def safe_prompt(prompt_text: str, default: str = "text") -> str:
+    try:
+        if not sys.stdin.isatty():
+            typer.secho(f"[⚠️  No TTY] Defaulting to '{default}' mode.", fg=typer.colors.YELLOW)
+            return default
+        return typer.prompt(prompt_text).strip().lower()
+    except (EOFError, typer.Abort):
+        return default
+
+
 # === CLI Entry ===
 @app.command()
 def start():
@@ -184,7 +194,7 @@ def start():
     typer.echo("\n🧠 Welcome to Parrot-GPT! Your AI Cybersecurity Assistant 🛡️")
 
     while True:
-        mode = typer.prompt("🎙️ Choose input mode (text/voice) [default: text]").strip().lower()
+        mode = safe_prompt("🎙️ Choose input mode (text/voice) [default: text]", default="text")
         if not mode:
             mode = "text"
         if mode not in ("text", "voice"):
@@ -215,7 +225,11 @@ def start():
         for i, cmd in enumerate(commands, 1):
             typer.echo(f"  {i}. {cmd}")
 
-        selected = typer.prompt("\n▶️ Enter command number to run", default="1")
+        if not sys.stdin.isatty():
+            selected = "1"
+        else:
+            selected = typer.prompt("\n▶️ Enter command number to run", default="1")
+
         try:
             command = commands[int(selected.strip()) - 1]
         except (IndexError, ValueError):
@@ -242,6 +256,11 @@ def start():
             explanation = ask_gpt(explanation_prompt)
 
         typer.secho(f"\n📘 GPT Explains:\n{explanation}", fg=typer.colors.GREEN)
+
+        # ✅ Exit early during CI to prevent infinite loop
+        if not sys.stdin.isatty():
+            typer.secho("\n✅ CI test run complete. Exiting loop.", fg=typer.colors.YELLOW)
+            break
 
 
 # === Launch Fallback ===
