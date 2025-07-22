@@ -225,7 +225,11 @@ def start():
         for i, cmd in enumerate(commands, 1):
             typer.echo(f"  {i}. {cmd}")
 
-        selected = typer.prompt("\n▶️ Enter command number to run", default="1")
+        if not sys.stdin.isatty():
+            selected = "1"
+        else:
+            selected = typer.prompt("\n▶️ Enter command number to run", default="1")
+
         try:
             command = commands[int(selected.strip()) - 1]
         except (IndexError, ValueError):
