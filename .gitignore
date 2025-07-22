@@ -27,3 +27,15 @@ tests/
 .env
 venv/
 installers/deb/parrot-gpt.deb
+
+# Ignore heavy/built folders
+.venv/
+dist/
+build/
+*.deb
+__pycache__/
+*.pyc
+*.zip
+*.mp3
+*.wav
+*.mp4
