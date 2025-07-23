@@ -6,16 +6,22 @@ import re
 import subprocess
 import sys
 from dotenv import load_dotenv
-# from assistant.core import run_assistant
+from assistant.shell_tools import list_available_tools
 from assistant.ai_adapter import AIAdapter
 from adapters.text_adapter import get_text_input
 from adapters.voice_adapter import listen_for_command
 from nova_voice.nova import speak_greeting
+from assistant.branding import print_brand 
+from assistant.branding import PROJECT_NAME, DESCRIPTION, OS_NAME,OS_NAME 
+#from assistant.branding import greet_once_per_run
 from shell_interface import execute_shell_command, explain_command
+
+ #++++====+++++# from assistant.branding import speak_greeting
+#greet_once_per_run()
 
 # === Setup ===
 load_dotenv()
-app = typer.Typer(help="Parrot-GPT: Your Cybersecurity Assistant for Parrot OS")
+app = typer.Typer(help=f"-{OS_NAME }: Your Cybersecurity Assistant for {OS_NAME }")
 
 # ✅ Allow --demo to pass silently to sys.argv use python main.py --demo
 @app.callback(invoke_without_command=True)
@@ -37,7 +43,7 @@ os.environ["DEMO_MODE"] = "true" if DEMO_MODE else "false"
 ai_adapter = AIAdapter(demo_mode=DEMO_MODE)
 
 # Track if greeting has already been given
-greeting_done = False
+#greeting_done = False
 
 # === Audio Playback ===
 def play_audio(file_path):
@@ -178,20 +184,60 @@ def safe_prompt(prompt_text: str, default: str = "text") -> str:
         return default
 
 
+
+
+
+# === Greeting and Audio ===
+# Function definition
+
+# ====== Greeting Controller ======
+#*def show_greeting_once():
+    #global greeting_done
+    #if not greeting_done:
+        #audio_path = speak_greeting()
+        #play_audio(audio_path)
+        #greeting_done = True*#
+
+
+
 # === CLI Entry ===
-@app.command()
+
 def start():
     """
     Main assistant command. Handles mode selection and prompt execution.
     """
-    global greeting_done
+    
+     # 🚀 Show branding at app start
+    print_brand()
+    speak_greeting()
 
-    if not greeting_done:
-        audio_path = speak_greeting()
-        play_audio(audio_path)
-        greeting_done = True
 
-    typer.echo("\n🧠 Welcome to Parrot-GPT! Your AI Cybersecurity Assistant 🛡️")
+
+   
+
+
+    
+
+    typer.echo(f"\n🧠 Welcome to -{PROJECT_NAME}! Your AI Cybersecurity Assistant 🛡️")
+    tools = ["nmap", "sqlmap", "whois", "hydra", "theHarvester"]
+
+    if not DEMO_MODE:
+       typer.echo("\n🔍 Checking available tools...\n")
+       available_tools = list_available_tools()
+       for tool in tools:
+           status = available_tools.get(tool, "❌ Missing")
+           typer.echo(f"  - {tool}: {status}")
+    else:
+        typer.echo("\n🧪 DEMO Mode: Simulated tools available:\n")
+        for tool in tools:
+            typer.echo(f"  - {tool}: ✅ (mocked)")
+
+    
+
+
+    
+
+
 
     while True:
         mode = safe_prompt("🎙️ Choose input mode (text/voice) [default: text]", default="text")
@@ -265,11 +311,6 @@ def start():
 
 # === Launch Fallback ===
 if __name__ == "__main__":
-    if len(sys.argv) == 1:
-        if not greeting_done:
-            audio_path = speak_greeting()
-            play_audio(audio_path)
-            greeting_done = True
-        start()
-    else:
-        app()
+    # This ensures greeting plays only once at startup
+    #show_greeting_once()
+    start()

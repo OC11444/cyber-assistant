@@ -1,9 +1,6 @@
+# 🧠 Assistant Core Logic
 
-📄 assistant/README.md
-
-# 🧠 Assistant Core Logic – Parrot-GPT
-
-This directory contains the core logic that powers the **Parrot-GPT Assistant** — including LLM interaction handlers, shell command analysis, and decision-making layers. It serves as the brain of the assistant, coordinating inputs, responses, and shell execution.
+This directory contains the core logic that powers the **Assistant** — including LLM interaction handlers, shell command analysis, and decision-making layers. It serves as the brain of the assistant, coordinating inputs, responses, and shell execution.
 
 ---
 
@@ -34,7 +31,7 @@ This directory contains the core logic that powers the **Parrot-GPT Assistant** 
 - Command explanation is generated using the same LLM after execution.
 
 ### 🧠 Decision Ranking
-- `r1_handler.py` processes the LLM output into **ranked command choices**.
+- `gemini_handler.py` processes the LLM output into **ranked command choices**.
 - User is prompted to pick a preferred command via numbered selection.
 - Example:
   ```bash

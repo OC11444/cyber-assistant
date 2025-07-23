@@ -1,6 +1,22 @@
-# 🧠 Parrot-GPT Assistant
 
-Parrot-GPT is a **cybersecurity-focused voice & text assistant** built for Parrot OS. It blends **ethical hacking** capabilities with **AI intelligence** — powered by OpenAI and Gemini — all within a terminal-friendly experience. Whether you're a CTF hacker, student, or ethical pentester, this assistant is designed to **educate, automate, and elevate** your terminal workflows.  
+
+# 🧠 LLM Shell Assistant
+
+A **cybersecurity-focused voice & text assistant** designed for ethical hacking, learning, and automation — combining **AI intelligence** (OpenAI + Gemini) with built-in terminal tools. Ideal for CTFs, pen-testing labs, and offline environments.
+
+---
+
+## ⚙️ CI/CD Workflows
+
+[![🧪 Syntax & Unit Tests](https://github.com/OC11444/parrot-gpt-assistant/actions/workflows/python-ci.yml/badge.svg)](https://github.com/OC11444/parrot-gpt-assistant/actions/workflows/python-ci.yml)
+[![🧪 Demo Mode Test](https://github.com/OC11444/parrot-gpt-assistant/actions/workflows/demo-check.yml/badge.svg)](https://github.com/OC11444/parrot-gpt-assistant/actions/workflows/demo-check.yml)
+[![🧪 Live Mode Test](https://github.com/OC11444/parrot-gpt-assistant/actions/workflows/live-mode-test.yml/badge.svg)](https://github.com/OC11444/parrot-gpt-assistant/actions/workflows/live-mode-test.yml)
+
+| Workflow         | Description                                                                 |
+|------------------|-----------------------------------------------------------------------------|
+| Syntax & Unit    | Runs `flake8` checks and test cases to validate syntax and behavior         |
+| Demo Mode        | Ensures offline/demo-mode CLI works with mocked AI responses                |
+| Live Mode        | Runs a real command with actual API keys to verify LLM integration works    |
 
 ---
 
@@ -23,64 +39,80 @@ Parrot-GPT is a **cybersecurity-focused voice & text assistant** built for Parro
 
 🚀 Core Features
 
-✨ Clean Terminal UI with Numbered Options
-🧠 Multi-AI Support (Gemini + OpenAI)
-🎙️ Vosk-Powered Voice Input
-🧪 DEMO Mode — No API Key Needed
-💬 Shell Command Suggestions
-📘 AI Explains the Output
-🔐 Built-in Ethical Tools:
+    ✨ Terminal UI with Numbered Options
 
-    Password cracking
+    🧠 Multi-AI Support (Gemini + OpenAI)
 
-    SQL Injection
+    🎙️ Voice Input via Vosk
 
-    Info gathering
+    🧪 Demo Mode — No API Key Required
 
-    Malware analysis
+    💬 Shell Command Suggestions + LLM Explanations
 
-🧪 DEMO Mode (For Judges & Offline Use)
+    🔐 Built-in Ethical Tools:
 
-🔍 No API Key Required. Everything is simulated.
+        Password Cracking
 
-    Copy the example config:
+        SQL Injection
 
+        Info Gathering
+
+        Malware Analysis
+
+🧪 DEMO Mode (Offline for Judges)
+
+    No API key required. Works in restricted/air-gapped systems.
+
+# Copy example environment
 cp .env.example .env
 
-    Set DEMO mode in your .env:
-
+# Enable demo mode
 DEMO_MODE=true
 
-    Run the assistant:
-
+# Start assistant
 python3 main.py
 
-✅ You will enter interactive simulation mode — no network access, but full voice/text input and mocked results for testing.
+    ✅ No network access needed
 
-📸 Insert screenshot of demo mode startup
-📸 Insert screenshot of command suggestion & mock explanation
-🤖 LIVE AI Mode (Real GPT + Gemini)
+    ✅ Simulated AI + tool output
 
-Enable real-time AI command generation using LLMs:
+    ✅ Works with voice or text input
 
-    Add your keys in .env:
+📸 Screenshots to be added:
 
-GEMINI_API_KEY=your_key
-OPENAI_API_KEY=your_key
+    Demo Mode Welcome
+
+    Simulated Command Suggestions
+
+    Mock Output + Explanations
+
+🤖 LIVE Mode (Real AI Output)
+
+    Run actual LLM-based command suggestions using OpenAI/Gemini.
+
+# In .env
 DEMO_MODE=false
+OPENAI_API_KEY=your_openai_key
+GEMINI_API_KEY=your_gemini_key
 
-    Run:
-
+# Run assistant
 python3 main.py
 
-💡 Choose between text or voice input dynamically.
+💡 Supports both voice and text input.
 
-📸 Insert screenshot of live LLM output and explanation
-💬 Sample Prompts (Work in Both Modes)
+📸 Screenshots to be added:
+
+    Real GPT/Gemini Output
+
+    Voice Interaction Sample
+
+    Tool Selection via Numbered UI
+
+💬 Example Prompts (Both Modes)
 
 Prompt:
 
-    scan open ports on 127.0.0.1
+scan open ports on 127.0.0.1
 
 Response:
 
@@ -91,7 +123,7 @@ Response:
 
 Prompt:
 
-    crack password hash using john
+crack password hash using john
 
 Response:
 
@@ -101,7 +133,7 @@ Response:
 
 Prompt:
 
-    enumerate SQL injection using sqlmap
+enumerate SQL injection using sqlmap
 
 Response:
 
@@ -109,53 +141,69 @@ Response:
 1. sqlmap -u "http://target.com/index.php?id=1" --dbs
 2. sqlmap -r request.txt --batch --risk=3 --level=5
 
-📘 Mock explanations are simple, clear, and technical enough for judges & users.
-🌈 Coming Soon — UI/UX Customizations
+🖼️ Screenshots
 
-🎨 Terminal Themes
-🌀 Shell Animations
-⚙️ Command History Replays
-🧩 Plugin Tool Support (Wireshark, Metasploit, etc.)
-🌐 Language Packs & Accessibility Options
-🔐 Ethical Use Policy
+Please place all screenshots in:
 
-🚨 Parrot-GPT is built for legal, educational, and ethical testing only.
+/docs/screenshots/
 
-Using this on unauthorized systems is illegal and violates Parrot-GPT’s terms of use.
-Always ensure you have explicit permission when conducting tests.
-📈 Scalability Vision
+Screenshot	Description
+demo-startup.png	Demo Mode welcome + banner
+demo-suggestions.png	Simulated options UI
+demo-explanation.png	Mock LLM explanation
+live-response.png	Actual GPT/Gemini reply
+voice-mode.png	Live voice input interaction
+🌈 Coming Soon
 
-✅ Fully containerizable (Docker, Podman)
-✅ .deb packaging (coming soon)
-✅ Cross-platform installers for Linux, Debian, Mac
-🔧 Auto-detects voice/text input mode
-📡 Works offline in Demo Mode — perfect for isolated VMs
-📸 Screenshots (To Be Added)
+    🎨 Terminal Themes
 
-✅ DEMO Mode: Welcome + command options
+    🌀 Shell Animations
 
-✅ DEMO Mode: Mocked output & explanation
+    ⚙️ Command History Replays
 
-✅ LIVE Mode: Real GPT response
+    🧩 Tool Plugins (e.g. Metasploit, Wireshark)
 
-✅ Voice Input Interaction
+    🌐 Language Packs & Accessibility
 
-    ✅ Text Input Flow
+🔐 Ethical Use
 
-📁 Place screenshots in the /docs/screenshots/ folder and link them here.
-🧪 Testing
+    ⚠️ Use this tool only in legal and ethical contexts.
 
-Run all tests using:
+This project is strictly for:
+
+    Educational use
+
+    CTFs and ethical hacking labs
+
+    Pentesting with permission
+
+Unauthorized use may violate laws and terms of use.
+📈 Scalability Goals
+
+    ✅ Works Offline in Demo Mode
+
+    ✅ Cross-Platform: Debian, Parrot, Kali
+
+    ✅ Auto-detects Input Type (Text/Voice)
+
+    ✅ Docker & .deb Packaging Coming Soon
+
+🧪 Running Tests
 
 pytest tests/
 
 🧰 Built With
 
-❤️ Parrot OS Security Edition
-🤖 OpenAI + Gemini
-🎤 Vosk STT
-🐍 Python 3.11+
-🖼️ Terminal Art + Typer + Shell
+    ❤️ Parrot OS Security Edition
+
+    🤖 OpenAI & Gemini
+
+    🎤 Vosk STT Engine
+
+    🐍 Python 3.11+
+
+    🖼️ Typer + Shell Styling
+
 📄 License
 
 MIT — see LICENSE

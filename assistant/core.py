@@ -3,6 +3,7 @@ import sys
 import openai
 import google.generativeai as genai
 from dotenv import load_dotenv
+from assistant.branding import PROJECT_NAME  # 🔧 Added for mock branding
 
 load_dotenv()
 
@@ -42,7 +43,9 @@ class AIAdapter:
 
     def chat_completion(self, messages, model=None, temperature=0.3, max_tokens=400):
         if DEMO_MODE:
-            return "[🧪 DEMO] Mock response: Here are 3 fake commands:\n1. ls -la\n2. whoami\n3. ping parrot.sh"
+           return self.mock_demo_response()
+
+        
 
         if self.provider == "openai":
             if model is None:
@@ -91,3 +94,13 @@ class AIAdapter:
                 )
         else:
             print("Model listing is only implemented for Gemini provider.")
+
+    def mock_demo_response(self):
+        return (
+            f"[🧪 DEMO] Mock response: Here are 3 fake commands:\n"
+        f"1. ls -la\n"
+        f"2. whoami\n"
+        f"3. ping {PROJECT_NAME.lower()}.local"
+    )
+        
+        
