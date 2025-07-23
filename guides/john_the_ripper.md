@@ -1,60 +1,80 @@
 
 
+# 🔐 John the Ripper Basics Guide
+
+## 🧠 What is John the Ripper?
+
+John the Ripper is a powerful password cracking tool used to test password strength by brute force, dictionary attacks, and more. It supports a wide range of hash formats and can be used in offline ethical password audits.
 
 ---
 
-### `guides/john_the_ripper.md`
-```markdown
-# 🔐 John the Ripper Basics Guide with Parrot GPT Assistant
+## ⚙️ Installation
 
-## What is John the Ripper?
-John the Ripper is a password cracking tool that helps test password strength by brute forcing or using wordlists.
-
----
-
-## Using John the Ripper with Parrot GPT Assistant
-
-Ask Nova for commands to crack password hashes or to use wordlists. For example:
-
-> "How do I crack a hash file with John the Ripper?"
-
-Nova will give you command options and explain what they do.
-
----
-
-## Common John Commands
-
-### 1. Crack hashes in a file
+**Linux (Debian-based):**
 ```bash
+sudo apt update && sudo apt install john
+
+macOS (with Homebrew):
+
+brew install john
+
+Windows:
+Download from the official repository: https://www.openwall.com/john/
+🚀 Common Commands
+1. Crack hashes from a file
+
 john hashes.txt
 
-<!-- [ADD SCREENSHOT: Nova suggesting john cracking command] -->
-2. Use a wordlist
+<!-- [ADD SCREENSHOT: Terminal showing john cracking a hash file] -->
+2. Use a custom wordlist
 
 john --wordlist=/usr/share/wordlists/rockyou.txt hashes.txt
 
-<!-- [ADD SCREENSHOT: Nova suggesting john with wordlist] -->
-3. Show cracked passwords
+<!-- [ADD SCREENSHOT: Terminal showing john using a wordlist] -->
+3. View cracked passwords
 
 john --show hashes.txt
 
-<!-- [ADD SCREENSHOT: Nova showing cracked passwords] -->
-How to Ask Nova
+<!-- [ADD SCREENSHOT: Terminal showing cracked passwords] -->
+🗣️ How to Ask the Assistant (UX Example Prompts)
 
-Examples you can say or type:
+Ask the assistant things like:
 
-    "Crack password hashes from file."
+    “Crack password hashes from file.”
 
-    "Use a wordlist with John."
+    “Use a wordlist with John the Ripper.”
 
-    "Show me the cracked passwords."
+    “Show cracked passwords.”
 
-Nova will respond with command choices and explanations.
-Ethical Reminder
+    “What are the hash types supported by John?”
 
-Only crack passwords you have explicit permission to test.
-Tips
+The assistant will suggest:
 
-    Use wordlists for better cracking chances
+    ✅ Command options (numbered)
 
-    Combine with hash cracking tools for advanced usage
+    🧠 Clear explanations of each
+
+    💬 Simulated outputs in DEMO mode
+
+⚠️ Ethical Notice
+
+Only crack hashes that you have legal and ethical permission to test. Unauthorized password cracking is illegal.
+🧩 Pro Tips
+
+    Use --format=FORMAT to specify hash types (e.g., --format=md5)
+
+    Combine with hashid or hash-identifier to detect hash types before cracking
+
+    Add --session for pause/resume cracking sessions
+
+💡 UI/UX Suggestions
+
+If you're building a front-end or CLI around this:
+
+    Show progress bars (cracking... 43%)
+
+    Let users upload hash files or paste hashes
+
+    Provide dropdowns for selecting wordlists
+
+    Use tooltips to explain command flags

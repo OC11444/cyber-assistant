@@ -24,6 +24,7 @@ idna==3.10
 jiter==0.10.0
 markdown-it-py==3.0.0
 mdurl==0.1.2
+mpg123==0.4
 openai==1.97.0
 pillow==11.3.0
 proto-plus==1.26.1
@@ -37,6 +38,7 @@ pydantic_core==2.33.2
 Pygments==2.19.2
 pyparsing==3.2.3
 python-dotenv==1.1.1
+pyttsx3==2.99
 requests==2.32.4
 rich==14.0.0
 rsa==4.9.1
@@ -48,6 +50,7 @@ tqdm==4.67.1
 typer==0.16.0
 typing-inspection==0.4.1
 typing_extensions==4.14.1
+tzlocal==5.3.1
 uritemplate==4.2.0
 urllib3==2.5.0
 vosk==0.3.45

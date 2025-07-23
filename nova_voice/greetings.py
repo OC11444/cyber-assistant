@@ -1,11 +1,16 @@
-from datetime import datetime
+# nova_voice/greetings.py
 
+from datetime import datetime
+from tzlocal import get_localzone
+from assistant.branding import ASSISTANT_NAME, PROJECT_NAME
 
 def get_greeting():
-    current_hour = datetime.now().hour
+    local_timezone = get_localzone()
+    current_hour = datetime.now(local_timezone).hour
+
     if current_hour < 12:
-        return "Good morning. I'm Nova, your Parrot assistant."
+        return f"Good morning. I'm {ASSISTANT_NAME}, your {PROJECT_NAME} assistant."
     elif 12 <= current_hour < 18:
-        return "Good afternoon. I'm Nova, your Parrot assistant."
+        return f"Good afternoon. I'm {ASSISTANT_NAME}, your {PROJECT_NAME} assistant."
     else:
-        return "Good evening. I'm Nova, your Parrot assistant."
+        return f"Good evening. I'm {ASSISTANT_NAME}, your {PROJECT_NAME} assistant."

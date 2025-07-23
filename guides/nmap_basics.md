@@ -1,47 +1,43 @@
-guides/nmap_basics.md
 
-# 🌐 Nmap Basics Guide with Parrot GPT Assistant
+
+# 🌐 Nmap Basics Guide with CyberGPT Assistant
 
 ## What is Nmap?
-Nmap ("Network Mapper") is a popular open-source tool used for network discovery and security auditing. It helps scan ports, discover hosts, and identify services.
+Nmap ("Network Mapper") is a powerful open-source tool for network discovery and security auditing. It can scan ports, detect services, and map networks — essential for ethical hacking and system hardening.
 
 ---
 
-## Using Nmap with Parrot GPT Assistant
+## Using Nmap with Nova (CyberGPT Assistant)
 
-Nova can help you generate and explain Nmap commands based on your query. For example, ask:
+Nova helps you generate and understand Nmap commands from simple questions like:
 
 > "How do I scan open ports on 192.168.1.1?"
 
-Nova will suggest a safe Nmap command and provide alternatives.
+Nova will suggest safe commands along with alternatives and explanations — no matter if you're using Ubuntu, Kali, or Parrot OS.
 
 ---
 
-## Common Nmap Commands
+## 🔧 Common Nmap Commands
 
-### 1. Simple port scan
+### 1. Simple Port Scan
 ```bash
 nmap 192.168.1.1
 
-<!-- [ADD SCREENSHOT: Nova suggests basic nmap scan command] -->
-2. Scan with service version detection
+2. Version Detection (Services)
 
 nmap -sV 192.168.1.1
 
-<!-- [ADD SCREENSHOT: Nova suggests nmap with -sV] -->
-3. Scan a subnet
+3. Scan a Subnet
 
 nmap 192.168.1.0/24
 
-<!-- [ADD SCREENSHOT: Nova suggesting subnet scan] -->
-4. Aggressive scan (more info)
+4. Aggressive Scan (More Details)
 
 nmap -A 192.168.1.1
 
-<!-- [ADD SCREENSHOT: Nova suggesting aggressive scan] -->
-How to Ask Nova
+🎤 How to Ask Nova
 
-Examples of voice/text inputs you can say:
+Try voice or text prompts like:
 
     "Scan all ports on my local network."
 
@@ -49,12 +45,15 @@ Examples of voice/text inputs you can say:
 
     "Help me do an aggressive scan on 192.168.1.10"
 
-Nova will respond with command options and explanations.
-Ethical Reminder
+Nova responds with commands + numbered options you can choose from — ready to copy, run, or modify.
+⚖️ Ethical Reminder
 
-Always have permission before scanning any network or host. Unauthorized scanning can be illegal.
-Tips
+    ✅ Only scan networks you own or have explicit permission to audit. Unauthorized scanning is illegal and unethical.
 
-    Use the numbered menu to select the command to run
+💡 Tips
 
-    Ask Nova to explain command outputs for better understanding
+    Use the numbered command menu to choose what to run.
+
+    Ask Nova to explain the command output line by line.
+
+    You can combine flags (like -sV -A) for deeper analysis.

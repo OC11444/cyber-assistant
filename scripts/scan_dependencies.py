@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
 import os
-import ast
+import subprocess
+import re
 
-# Simple mapping for common non-standard libraries
+# Known third-party packages for pip installation
 KNOWN_PIP_PACKAGES = {
     "typer": "typer",
     "dotenv": "python-dotenv",
@@ -14,44 +15,66 @@ KNOWN_PIP_PACKAGES = {
     "speech_recognition": "SpeechRecognition",
     "requests": "requests",
     "openai": "openai",
-    "google.generativeai": "google-generativeai",
+    "google": "google-generativeai",
+    "pyttsx3": "pyttsx3",
+    "nltk": "nltk",
+    "sklearn": "scikit-learn",
+    "cv2": "opencv-python",
+    "PIL": "Pillow",
+    "flask": "flask"
+    # Add more as needed
 }
 
-def extract_imports_from_file(file_path):
-    with open(file_path, "r", encoding="utf-8") as f:
-        tree = ast.parse(f.read(), filename=file_path)
-    return {node.names[0].name.split('.')[0] for node in ast.walk(tree) if isinstance(node, ast.Import)} | \
-           {node.module.split('.')[0] for node in ast.walk(tree) if isinstance(node, ast.ImportFrom) and node.module}
-
-def find_all_imports(project_dir="."):
-    imports = set()
+def grep_python_imports(project_dir="."):
+    print("🔍 Grep-style scan for imports...")
+    imported = set()
+    pattern = re.compile(r'^\s*(import|from)\s+([a-zA-Z0-9_\.]+)')
+    
     for root, _, files in os.walk(project_dir):
-        for file in files:
-            if file.endswith(".py"):
-                try:
-                    path = os.path.join(root, file)
-                    imports.update(extract_imports_from_file(path))
-                except Exception as e:
-                    print(f"⚠️ Failed to parse {file}: {e}")
-    return imports
+        for fname in files:
+            if fname.endswith(".py"):
+                with open(os.path.join(root, fname), encoding="utf-8", errors="ignore") as f:
+                    for line in f:
+                        match = pattern.match(line)
+                        if match:
+                            module = match.group(2).split('.')[0]
+                            imported.add(module)
+    return imported
 
-def resolve_dependencies(imports):
-    pip_deps = set()
-    for imp in imports:
-        if imp in KNOWN_PIP_PACKAGES:
-            pip_deps.add(KNOWN_PIP_PACKAGES[imp])
-    return pip_deps
+def resolve_to_pip_names(imported_modules):
+    return {KNOWN_PIP_PACKAGES[m] for m in imported_modules if m in KNOWN_PIP_PACKAGES}
+
+def install_packages(packages):
+    failed = []
+    for pkg in packages:
+        print(f"📦 Installing: {pkg} ...")
+        result = subprocess.run(
+            ["pip", "install", pkg],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE
+        )
+        if result.returncode != 0:
+            print(f"❌ Failed: {pkg}")
+            failed.append(pkg)
+    return failed
 
 if __name__ == "__main__":
-    print("🔍 Scanning project for used imports...")
-    all_imports = find_all_imports()
-    resolved = resolve_dependencies(all_imports)
-    
-    print("\n📦 Detected third-party dependencies:")
-    for pkg in sorted(resolved):
-        print(f" - {pkg}")
+    imports = grep_python_imports()
+    resolved = resolve_to_pip_names(imports)
 
-    with open("requirements_full.txt", "w") as f:
-        f.write("\n".join(sorted(resolved)))
-    
-    print("\n✅ Saved to requirements_full.txt")
+    print("\n📦 Found these pip packages:")
+    for r in sorted(resolved):
+        print(f" - {r}")
+
+    failed = install_packages(resolved)
+
+    print("\n📄 Freezing installed packages to requirements.txt ...")
+    with open("requirements.txt", "w") as f:
+        subprocess.run(["pip", "freeze"], stdout=f)
+
+    if failed:
+        print("\n❗ Some packages failed to install. Logged in 'failed_deps.txt'")
+        with open("failed_deps.txt", "w") as f:
+            f.write("\n".join(failed))
+    else:
+        print("\n✅ All packages installed successfully.")

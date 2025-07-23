@@ -1,6 +1,6 @@
-guides/metasploit.md
 
-# 🛠️ Metasploit Basics Guide with Parrot GPT Assistant
+
+# 🛠️ Metasploit Basics Guide with the GPT Assistant
 
 ## What is Metasploit?
 
@@ -8,13 +8,13 @@ Metasploit is a powerful penetration testing framework used to find, exploit, an
 
 ---
 
-## Using Metasploit with Parrot GPT Assistant
+## Using Metasploit with the GPT Assistant
 
-Nova can help you construct Metasploit commands and guide you through using common modules. For example, you can ask:
+The assistant can help you construct Metasploit commands and guide you through using common modules. For example, you can ask:
 
 > "How do I start Metasploit and run a basic exploit?"
 
-Nova will suggest commands and explain their usage step-by-step.
+It will suggest commands and explain their usage step-by-step.
 
 ---
 
@@ -24,28 +24,28 @@ Nova will suggest commands and explain their usage step-by-step.
 ```bash
 msfconsole
 
-<!-- [ADD SCREENSHOT: Nova suggesting msfconsole command] -->
+<!-- [ADD SCREENSHOT: Assistant suggesting msfconsole command] -->
 2. Search for an exploit
 
 search vsftpd
 
-<!-- [ADD SCREENSHOT: Nova suggesting search command] -->
+<!-- [ADD SCREENSHOT: Assistant suggesting search command] -->
 3. Use an exploit module
 
 use exploit/unix/ftp/vsftpd_234_backdoor
 
-<!-- [ADD SCREENSHOT: Nova showing 'use' command suggestion] -->
+<!-- [ADD SCREENSHOT: Assistant showing 'use' command suggestion] -->
 4. Set required options (e.g., target IP)
 
 set RHOST 192.168.1.10
 
-<!-- [ADD SCREENSHOT: Nova suggesting set command] -->
+<!-- [ADD SCREENSHOT: Assistant suggesting set command] -->
 5. Run the exploit
 
 exploit
 
-<!-- [ADD SCREENSHOT: Nova suggesting exploit command] -->
-How to Ask Nova
+<!-- [ADD SCREENSHOT: Assistant suggesting exploit command] -->
+How to Ask the Assistant
 
 Examples:
 
@@ -59,13 +59,12 @@ Examples:
 
     "Run exploit"
 
-Nova will reply with suggested commands and explanations.
+The assistant will reply with suggested commands and clear explanations.
 Ethical Reminder
 
-Only use Metasploit against targets you have permission to test.
+Only use Metasploit against systems you are authorized to test.
 Tips
 
-    Use help inside msfconsole for detailed module commands
+    Use help inside msfconsole to see detailed module options.
 
-    Combine Metasploit with Nmap scans for better target information
-
+    Combine Metasploit with Nmap scans to gather better information on targets.
