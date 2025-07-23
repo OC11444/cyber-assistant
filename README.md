@@ -1,166 +1,100 @@
-# 🦜 Parrot GPT Assistant
+# 🧠 LLM Shell Assistant
 
-**Parrot GPT Assistant** is an intelligent, voice-enabled terminal companion built for **Parrot OS**. Designed for cybersecurity learners, ethical hackers, and Linux tinkerers, it blends AI, shell interaction, and offline voice synthesis into a hacking-friendly experience. Nova is not just a voice — it’s your first mate in the terminal.
-
-![Nova Voice Terminal Banner](https://i.imgur.com/VYYjMue.png)
+A **cybersecurity-focused voice & text assistant** for ethical hacking, CTFs, and automation. Combines **AI intelligence** (OpenAI + Gemini) with real terminal tools. Works offline in demo mode — ideal for judges and restricted environments.
 
 ---
 
-## 🎯 Key Features
+## 🚀 Summary
 
-### 🎙️ Voice-Activated Boot Greeting
+LLM Shell Assistant helps students, researchers, and cybersecurity enthusiasts quickly get **AI-powered command suggestions, tool explanations, and voice control** — directly from the terminal.
 
-> Nova greets you with a custom voice message every time you launch your virtual machine.
-
-### 🧠 GPT-Like Terminal Intelligence
-
-> Ask Nova to explain commands, give security tips, or walk you through tool usage.
-
-### 🛠️ Built-In Tool Guides
-
-> From reconnaissance to exploitation, Nova helps with:
-
-* `nmap`
-* `sqlmap`
-* `john`
-* `metasploit`
-
-### ⚙️ Modular Hacking Support
-
-> Specialized modules for:
-
-* Malware analysis
-* Hash cracking
-* Cipher decoding
-* SQL Injection
-* OSINT lookups
-
-### 🐚 Shell Integration
-
-> Execute shell commands with contextual help, feedback, and suggestions.
+It auto-generates shell commands for password cracking, SQL injection, info gathering, and more. Built-in **DEMO MODE** simulates all responses without internet access.
 
 ---
 
-## 🧱 Project Structure
+## 🧩 Features
 
-```
-parrot-gpt-assistant/
-├── assistant/            # Core logic & terminal interactions
-├── nova_voice/           # Voice greeting engine (Nova)
-├── tools/                # Custom hacking modules
-├── guides/               # Markdown tutorials for popular tools
-├── shell_interface.py    # Connects Nova to your shell
-├── run_nova.py           # Greets user at startup
-├── sounds/               # Nova's .wav & voice files
-├── venv/                 # Python virtual environment
-└── README.md             # Project documentation
-```
+- ✅ **AI Suggestions** (OpenAI + Gemini)
+- 🎤 Voice & Text Input
+- 🧪 **Offline Demo Mode** (No API needed)
+- 🔐 Built-in Ethical Tools:
+  - SQLmap
+  - John the Ripper
+  - Nmap / Rustscan
+  - Malware Analysis Tools
+- 🧠 LLM Explains Command Output
+- 🧰 Fully CLI-Based, No GUI Needed
 
 ---
 
-## 🚀 Getting Started
+## 🌐 Use Cases
 
-### 🔧 1. Clone the Repo
+- Ethical Hacking Labs
+- CTF Environments
+- Air-Gapped or Secure Terminals
+- Student/Beginner Training
+- Accessible Voice-Controlled Hacking
+
+---
+
+## 📦 Quick Setup
 
 ```bash
-git clone https://github.com/your-username/parrot-gpt-assistant.git
+# 1. Clone the project
+git clone https://github.com/OC11444/parrot-gpt-assistant
 cd parrot-gpt-assistant
-```
 
-### 🧪 2. Set Up the Virtual Environment
+# 2. Install requirements
+pip install -r requirements/common.txt
 
-```bash
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-```
+# 3. Copy env
+cp .env.example .env
+🧪 Demo Mode (Offline)
+No API keys or internet required.
+# Enable demo mode
+DEMO_MODE=true
 
-### ▶️ 3. Run Nova
-
-```bash
-python run_nova.py
-```
-
-Nova will greet you with a custom voice intro.
-
----
-
-## 🔊 Make Nova Greet You on VM Boot
-
-### Step 1: Create a Startup Script
-
-```bash
-nano ~/start_nova.sh
-```
-
-Paste this:
-
-```bash
-#!/bin/bash
-cd ~/Desktop/parrot-gpt-assistant
-source venv/bin/activate
-python run_nova.py
-```
-
-Make it executable:
-
-```bash
-chmod +x ~/start_nova.sh
-```
-
-### Step 2: Add to System Startup
-
-**For XFCE or MATE**:
-
-* Go to **Session and Startup** > **Application Autostart**
-* Click **Add**
-
-  * **Name**: Nova
-  * **Command**: `/home/your-username/start_nova.sh`
-
----
-
-## 👥 Target Users
-
-* Cybersecurity students
-* Penetration testers
-* Ethical hackers
-* Parrot OS power users
-* AI + Linux automation enthusiasts
-
----
-
-## 🔉 Voice Engine
-
-Nova uses `pyttsx3` for local, offline speech synthesis. You can extend it with:
-
-* Emotion-aware greetings
-* Custom voices
-* .wav overlays for audio personality
-
----
-
-## 🔮 Future Possibilities
-
-* Interactive chat-style mode in terminal
-* Real-time alerts from logs or scans
-* Integration with TryHackMe, HackTheBox
-* Web panel + API control for remote Nova instances
-
----
-
-## 📜 License
-
-**MIT License** – Free to use, modify, and distribute. Credit appreciated.
-
----
-
-## ✨ Acknowledgements
-
-* 🐧 **Parrot OS** – For a powerful ethical hacking environment
-* 🧠 **OpenAI** – For inspiring natural language intelligence
-* 🧑‍💻 **You** – For pushing the boundaries of what's possible in your terminal
-
-> "Not just a script. Not just a voice. It's your cyber companion."
-> — *Nova the Assistant* ✨🦜
-
+# Start
+python3 main.py
+✅ Simulates AI suggestions, tools, and explanations
+✅ Ideal for judges or offline labs
+🤖 Live Mode (Real AI)
+DEMO_MODE=false
+OPENAI_API_KEY=your_openai_key
+GEMINI_API_KEY=your_gemini_key
+python3 main.py
+🧠 Sample Prompts
+Prompt:
+scan open ports on 127.0.0.1
+Response:
+nmap -sV 127.0.0.1
+sudo nmap -A 127.0.0.1
+Prompt:
+crack password hash
+Response:
+john --wordlist=rockyou.txt hashes.txt
+john --incremental hashes.txt
+📸 Screenshots (See /docs/screenshots/)
+Image	Description
+demo-startup.png	Demo Mode welcome
+demo-suggestions.png	Simulated shell command options
+live-response.png	Actual GPT/Gemini output
+voice-mode.png	Voice input example
+🔐 Ethics First
+Use this tool only in legal, ethical, and educational settings.
+Not for real-world exploitation or unauthorized scanning.
+🧰 Tech Stack
+Python 3.11+
+Typer CLI Framework
+OpenAI & Gemini APIs
+Vosk STT Engine
+Tested on Debian, Kali, Parrot OS
+🔮 What’s Next
+🧩 Tool Plugins (Metasploit, Wireshark)
+🎨 Custom Terminal Themes
+🐳 Docker + .deb Installers
+🌍 Language Packs & Accessibility Modes
+🧪 Tests
+pytest tests/
+📄 License
+MIT License — see LICENS
