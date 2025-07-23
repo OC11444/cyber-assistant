@@ -1,9 +1,0 @@
-#!/bin/bash
-echo "[+] Installing dependencies..."
-pip3 install -r /opt/parrot-gpt/requirements.txt
-
-echo "[+] Creating global launch shortcut..."
-ln -sf /opt/parrot-gpt/start_nova.sh /usr/bin/parrot-gpt
-
-echo "[✓] Installation complete. Type 'parrot-gpt' to launch."
-
