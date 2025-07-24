@@ -1,6 +1,0 @@
-#!/bin/bash
-echo "[🔄] Uninstalling Parrot-GPT..."
-if [ -f /usr/bin/parrot-gpt ]; then
-    echo "[🧹] Removing launcher symlink..."
-    rm -f /usr/bin/parrot-gpt
-fi
