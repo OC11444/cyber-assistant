@@ -7,15 +7,21 @@ Welcome to the official documentation for Cyber Assistant — a voice & text-pow
 
 🖼️ Screenshots
 
-    📥 Installation Stage:
-    media/program/program_installation.jpeg
+    ### 📥 Installation Stage:
 
-    🟢 Startup Success:
-    media/program/program_start.jpeg
+![Installation Stage](media/program/program_installation.jpeg)
 
-🎞️ GIF Preview
 
-    🎬 media/program/program_setup.gif — Step-by-step installation walkthrough
+    ### 🟢 Startup Success:
+
+![Startup Success](media/program/program_start.jpeg)
+
+
+### 🎞️ GIF Preview
+
+🎬 **Step-by-step installation walkthrough**
+
+![Installation Walkthrough](media/program/program_setup.gif)
 
 🎥 Video Walkthrough
 
@@ -29,15 +35,22 @@ Welcome to the official documentation for Cyber Assistant — a voice & text-pow
 
 🖼️ Screenshots
 
-    🚀 media/demo_mode/demo_startup.jpeg — Launching Demo Mode
+   ### 🚀 Demo Mode Showcase
 
-    🤖 media/demo_mode/demo_running1.jpeg — AI generating mock suggestions
+🚀 **Launching Demo Mode**  
+![Launching Demo Mode](media/demo_mode/demo_startup.jpeg)
 
-    🎯 media/demo_mode/demo_running2.jpeg — Mock output explanation shown
+🤖 **AI generating mock suggestions**  
+![AI generating mock suggestions](media/demo_mode/demo_running1.jpeg)
 
-🎞️ GIF Preview
+🎯 **Mock output explanation shown**  
+![Mock output explanation](media/demo_mode/demo_running2.jpeg)
 
-    🎬 media/demo_mode/demo_mode.gif — Demo Mode in action!
+### 🎞️ GIF Preview
+
+🎬 **Demo Mode in action!**  
+![Demo Mode in action!](media/demo_mode/demo_mode.gif)
+
 
 🎥 Full Demo Video
 
@@ -48,19 +61,27 @@ Welcome to the official documentation for Cyber Assistant — a voice & text-pow
 
     💥 Executes real shell commands and uses live LLMs (OpenAI, Gemini) to explain output. Use only in safe & legal environments.
 
-🖼️ Screenshots
+### 🖼️ Screenshots
 
-    ⚡ media/live_mode/live_startup.jpeg — Live Mode bootup
+⚡ **Live Mode bootup**  
+![Live Mode bootup](media/live_mode/live_startup.jpeg)
 
-    🧨 media/live_mode/live_1.jpeg — Running real hacking tools
+🧨 **Running real hacking tools**  
+![Running real hacking tools](media/live_mode/live_1.jpeg)
 
-    💡 media/live_mode/live_2.jpeg — Assistant explains output
+💡 **Assistant explains output**  
+![Assistant explains output](media/live_mode/live_2.jpeg)
 
-    🕵️ media/live_mode/live_3.jpeg — Interactive debugging
+🕵️ **Interactive debugging**  
+![Interactive debugging](media/live_mode/live_3.jpeg)
 
-🎞️ GIF Preview
+---
 
-    🎬 media/live_mode/live_mode.gif — Live mode walkthrough in motion
+### 🎞️ GIF Preview
+
+🎬 **Live mode walkthrough in motion**  
+![Live mode walkthrough in motion](media/live_mode/live_mode.gif)
+
 
 🎥 Full Live Session Videos
 
