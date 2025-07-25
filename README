@@ -1,266 +1,217 @@
-# 🛡️ Cyber Assistant Documentation
+# 🛡️ Cyber Assistant
 
-Welcome to the official documentation for **Cyber Assistant** — a voice & text-powered terminal assistant tailored for ethical hacking, CTFs, and cybersecurity automation. Built for Debian-based distros (Kali, Parrot, Ubuntu), this project is ready for both offline and live AI-enhanced hacking workflows.
-
----
-
-## 📦 Program Setup
-
-> ⚙️ This section guides you through initial installation and launching the assistant before using any of the modes.
-
-### 🖼️ Screenshots
-
-#### 📥 Installation Stage:
-
-![Installation Stage](media/program/program_installation.jpeg)
-
-#### 🟢 Startup Success:
-
-![Startup Success](media/program/program_start.jpeg)
+![Python](https://img.shields.io/badge/python-3.11%2B-blue?logo=python&logoColor=white)
+![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
+![Mode](https://img.shields.io/badge/DEMO-LIVE-orange?style=flat-square&logo=terminal)
 
 ---
 
-### 🎞️ GIF Preview
-
-🎬 **Step-by-step installation walkthrough**  
-![Installation Walkthrough](media/program/program_setup.gif)
+**Cyber Assistant** is a terminal-based AI companion for cybersecurity automation, CTFs, and ethical hacking. Designed for **Debian-based distros** like **Kali, Parrot, and Ubuntu**, it runs in both **Demo (offline safe)** and **Live (real tool execution)** modes. With voice & text input support, this assistant is your all-in-one hacking partner.
 
 ---
 
-### 🎥 Video Walkthrough
+## 📽️ **Walkthrough Videos (Start Here)**
 
-▶️ [First Setup - Watch Video](https://youtu.be/n165TtI_aLQ)
+🎥 **First Setup Video**  
+[![First Setup](https://img.youtube.com/vi/n165TtI_aLQ/0.jpg)](https://youtu.be/n165TtI_aLQ)
 
----
+🎥 **Demo Mode Walkthrough**  
+[![Cyber Assistant Demo](https://img.youtube.com/vi/7wr2LCZurDA/0.jpg)](https://youtu.be/7wr2LCZurDA)
 
-## 🧪 Demo Mode
+🎥 **Live Session Part 1**  
+[![Live Part 1](https://img.youtube.com/vi/i5ATgRiXxxk/0.jpg)](https://youtu.be/i5ATgRiXxxk)
 
-🧠 Simulated environment with no real API keys or tool execution. Judges can try commands safely offline. All interactions are mocked!
-
----
-
-### 🖼️ Screenshots
-
-#### 🚀 Demo Mode Showcase
-
-🚀 **Launching Demo Mode**  
-![Launching Demo Mode](media/demo_mode/demo_startup.jpeg)
-
-🤖 **AI generating mock suggestions**  
-![AI generating mock suggestions](media/demo_mode/demo_running1.jpeg)
-
-🎯 **Mock output explanation shown**  
-![Mock output explanation](media/demo_mode/demo_running2.jpeg)
+🎥 **Live Session Part 2**  
+[![Live Part 2](https://img.youtube.com/vi/k3ONRbtxZWc/0.jpg)](https://youtu.be/k3ONRbtxZWc)
 
 ---
 
-### 🎞️ GIF Preview
+## 🚀 **Use Case Summary**
 
-🎬 **Demo Mode in action!**  
-![Demo Mode in action!](media/demo_mode/demo_mode.gif)
+Use **Cyber Assistant** to:
 
----
-
-### 🎥 Full Demo Video
-
-▶️ [Cyber Assistant Demo - Watch Video](https://youtu.be/7wr2LCZurDA)
-
----
-
-## 🚀 Live Mode
-
-💥 Executes real shell commands and uses live LLMs (OpenAI, Gemini) to explain output. Use only in safe & legal environments.
+- 🧠 Auto-generate shell commands using AI (OpenAI + Gemini)
+- 🧪 Simulate tool behavior in safe Demo Mode (no API keys needed)
+- 🎙️ Use voice or text to interact with your terminal
+- 🧑‍🏫 Train, debug, or demo cybersecurity tools without risking real systems
+- ✅ Learn hacking ethically in air-gapped, exam, or offline setups
 
 ---
 
-### 🖼️ Screenshots
+## 📦 **Program Setup**
 
-⚡ **Live Mode bootup**  
-![Live Mode bootup](media/live_mode/live_startup.jpeg)
+> ⚙️ Follow these steps before running the assistant in any mode.
 
-🧨 **Running real hacking tools**  
-![Running real hacking tools](media/live_mode/live_1.jpeg)
+### 🖼️ **Screenshots**  
+[![Installation Stage](media/program/program_installation.jpeg)](media/program/program_installation.jpeg)  
+*Installation Stage*
 
-💡 **Assistant explains output**  
-![Assistant explains output](media/live_mode/live_2.jpeg)
-
-🕵️ **Interactive debugging**  
-![Interactive debugging](media/live_mode/live_3.jpeg)
+[![Startup Success](media/program/program_start.jpeg)](media/program/program_start.jpeg)  
+*Startup Success*
 
 ---
 
-### 🎞️ GIF Preview
-
-🎬 **Live mode walkthrough in motion**  
-![Live mode walkthrough in motion](media/live_mode/live_mode.gif)
-
----
-
-### 🎥 Full Live Session Videos
-
-▶️ [Live Session Part 1 - Watch Video](https://youtu.be/i5ATgRiXxxk)  
-▶️ [Live Session Part 2 - Watch Video](https://youtu.be/k3ONRbtxZWc)
+### 🎞️ **GIF Preview**  
+[![Installation GIF](media/program/program_setup.gif)](media/program/program_setup.gif)  
+*Step-by-step installation walkthrough*
 
 ---
 
-## 🧠 LLM Shell Assistant Overview
+## 🧪 **Demo Mode (Offline Safe)**
 
-A cybersecurity-focused assistant that works via voice & text. Combines the intelligence of **OpenAI + Gemini** with your real terminal tools. Works offline in Demo Mode — perfect for exams, air-gapped labs, or demos.
+🧠 Run safely without real API keys or tool execution. Perfect for testing, demos, and competitions.
 
----
+### 🖼️ **Screenshots**  
+[![Launching Demo Mode](media/demo_mode/demo_startup.jpeg)](media/demo_mode/demo_startup.jpeg)  
+*Launching Demo Mode*
 
-## 🚀 Project Summary
+[![AI generating mock suggestions](media/demo_mode/demo_running1.jpeg)](media/demo_mode/demo_running1.jpeg)  
+*Mock Suggestions in Action*
 
-**Cyber Assistant** empowers students, hackers, and researchers to:
-
-- 🧠 Auto-generate shell commands  
-- 🎙️ Control via voice or text  
-- 🔍 Get real-time explanations from AI  
-- 🧪 Simulate all actions offline in Demo Mode  
-
----
-
-## 🧩 Key Features
-
-- 🤖 AI Suggestions (OpenAI + Gemini)  
-- 🗣️ Voice & Text Input Support  
-- 🔌 Offline Mode with full simulation  
-- 💥 Live Terminal Execution + AI Explanation  
-
-### 🔧 Tools Integrated:
-
-- SQLmap  
-- John the Ripper  
-- Nmap / Rustscan  
-- Malware analysis modules  
-
-✅ Pure CLI – No GUI Required
+[![Mock output explanation](media/demo_mode/demo_running2.jpeg)](media/demo_mode/demo_running2.jpeg)  
+*Explanation of Simulated Output*
 
 ---
 
-## 🌐 Use Cases
-
-- 🏫 Cybersecurity Learning Labs  
-- 🏁 CTF Environments  
-- 🔒 Air-Gapped or Restricted Setups  
-- 🎓 Beginner Training with AI Help  
-- 🧏 Accessibility-First Hacking Interface  
+### 🎞️ **GIF Preview**  
+[![Demo Mode GIF](media/demo_mode/demo_mode.gif)](media/demo_mode/demo_mode.gif)
 
 ---
 
-## ⚙️ Quick Setup Guide
+## 🚀 **Live Mode (Real Execution)**
+
+💥 Use real tools and AI explanations. Only run in safe, legal environments.
+
+### 🖼️ **Screenshots**  
+[![Live Mode bootup](media/live_mode/live_startup.jpeg)](media/live_mode/live_startup.jpeg)  
+*Live Mode Bootup*
+
+[![Running real hacking tools](media/live_mode/live_1.jpeg)](media/live_mode/live_1.jpeg)  
+*Executing Tools*
+
+[![Assistant explains output](media/live_mode/live_2.jpeg)](media/live_mode/live_2.jpeg)  
+*AI Explains Terminal Output*
+
+[![Interactive debugging](media/live_mode/live_3.jpeg)](media/live_mode/live_3.jpeg)  
+*Interactive Debugging with AI*
+
+---
+
+### 🎞️ **GIF Preview**  
+[![Live Mode GIF](media/live_mode/live_mode.gif)](media/live_mode/live_mode.gif)
+
+---
+
+## 🧠 **LLM Shell Assistant Overview**
+
+A hybrid shell assistant using **OpenAI + Gemini** for cybersecurity workflows. Works offline or online and supports **voice + text**. Seamlessly integrates with your existing terminal tools for explanations, simulations, and automation.
+
+---
+
+## 🧩 **Key Features**
+
+- 🤖 **AI Suggestions** (OpenAI + Gemini)
+- 🗣️ **Voice & Text Input**
+- 🔌 **Offline Demo Mode** for testing & education
+- 💥 **Live Command Execution** with AI insight
+
+### 🔧 **Integrated Tools**
+
+- `SQLmap`
+- `John the Ripper`
+- `Nmap` / `Rustscan`
+- Malware Analysis Modules
+
+✅ Pure CLI — No GUI Required
+
+---
+
+## 🌐 **Use Cases**
+
+- 🏫 **Cybersecurity Labs**
+- 🏁 **CTF Environments**
+- 🔒 **Air-Gapped Systems**
+- 🎓 **Beginner Training**
+- 🧏 **Accessibility-First Interfaces**
+
+---
+
+## ⚙️ **Quick Setup Guide**
 
 ```bash
 # 1️⃣ Clone the Repository
 git clone https://github.com/OC11444/cyber-assistant
 cd cyber-assistant
 
-# 2️⃣ Install Python Dependencies
+# 2️⃣ Install Dependencies
 pip install -r requirements/common.txt
 
 # 3️⃣ Copy Environment File
 cp .env.example .env
-
-🧪 DEMO MODE (Offline Safe)
-
-    No API keys needed. Runs in safe, simulated mode.
-
-# Enable DEMO mode
+🧪 Demo Mode Setup (Safe Offline)
+# No API keys needed
 DEMO_MODE=true
 
 # Start the Assistant
 python3 main.py
-
 ✅ Works without internet
-✅ Judges can interact safely
-✅ Ideal for testing environments
-🤖 LIVE MODE (Real AI + Tools)
-
-    Run real tools with real AI power.
-
-# Disable DEMO mode and add keys
+✅ Safe for judges or students
+✅ Ideal for testing
+🤖 Live Mode Setup (Real AI & Tools)
+# Add your API keys
 DEMO_MODE=false
 OPENAI_API_KEY=your_openai_key
 GEMINI_API_KEY=your_gemini_key
 
 # Start the Assistant
 python3 main.py
-
 🧠 Sample Prompts
+Prompt:
+scan open ports on 127.0.0.1
 
-    Prompt:
-    scan open ports on 127.0.0.1
-
-    Response:
-
+Response:
 nmap -sV 127.0.0.1
 sudo nmap -A 127.0.0.1
 
-    Prompt:
-    crack password hash
+Prompt:
+crack password hash
 
-    Response:
-
+Response:
 john --wordlist=rockyou.txt hashes.txt
 john --incremental hashes.txt
-
 📸 Visual Preview Recap
-
 🛠️ Program Setup
 🎥 First Setup
-
 🧪 Demo Mode
 🎥 Cyber Assistant Demo
-
 ⚡ Live Mode
-🎥 Live Part 1, Live Part 2
-🛡️ Ethics First!
-
-🚨 This tool is built for education, legal use, and ethical hacking only.
-
-❌ Not for unauthorized access
-✔️ Respect CTF/lab boundaries
+🎥 Live Part 1
+🎥 Live Part 2
+🛡️ Ethics First
+🚨 This tool is built strictly for legal and ethical use:
+❌ No unauthorized access
+✔️ Respect all CTF/lab rules
 🧑‍🎓 Use it to learn, not exploit
 🧰 Tech Stack
-
-    🐍 Python 3.11+
-
-    ⚙️ Typer CLI Framework
-
-    🔮 OpenAI + Gemini APIs
-
-    🗣️ Vosk Speech-to-Text Engine
-
-    🧪 Tested on: Parrot OS, Kali Linux, Ubuntu
-
+🐍 Python 3.11+
+⚙️ Typer CLI Framework
+🔮 OpenAI + Gemini APIs
+🗣️ Vosk Speech Recognition
+🐧 Tested on: Parrot OS, Kali, Ubuntu
 🌱 What’s Coming Next
-
-    🔌 Tool Plugins (Metasploit, Wireshark)
-
-    🎨 Custom Terminal Themes
-
-    🐳 Docker & .deb Installers
-
-    🌍 Language Packs + Accessibility
-
-    🧩 Plugin API for extending assistant behavior
-
-    💬 In-terminal Chat Mode for AI feedback loops
-
-    🔐 Secure Key Storage Integration
-
+🔌 Tool Plugins: Metasploit, Wireshark
+🎨 Custom Terminal Themes
+🐳 Docker + .deb Installers
+🌍 Language Packs + Accessibility
+🧩 Plugin API to extend assistant
+💬 In-terminal Chat Mode
+🔐 Secure Key Storage
 🧪 Running Tests
-
 pytest tests/
-
 📄 License
-
 MIT License — see LICENSE
 🔗 Repository Info
-
 📁 Repo: cyber-assistant
 👨‍💻 Maintainer: OC11444 on GitHub
-✨ If you find this useful, consider starring the repo and sharing your feedback or issues via GitHub Discussions.
-
-© 2025 Cyber Assistant Team — Made with 🧠, 🛠️, and ❤️.
-
+✨ Star this repo if it helped you — and share feedback via GitHub Discussions!
+© 2025 Cyber Assistant Team — Made with 🧠, 🛠️, and ❤️
