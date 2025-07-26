@@ -263,4 +263,47 @@ MIT License — see LICENSE
 ✨ If you find this useful, consider starring the repo and sharing your feedback or issues via GitHub Discussions.
 
 © 2025 Cyber Assistant Team — Made with 🧠, 🛠️, and ❤️.
+## 🧠 ICP Integration
+
+This project includes a minimal on-chain component for WCHL compliance.
+
+- Canister: `log_canister` written in Motoko
+- Location: `src/log_canister/main.mo`
+- Usage: Logs events like `"user ran sudo nmap"` to ICP console (via `Debug.print`).
+- Deployment: Via `dfx deploy`
+
+### Run Locally
+
+```bash
+dfx start --background
+dfx deploy
+dfx canister call log_canister log '( "Boot: Assistant started." )'
+
+    ❗ NOTE: The ICP component is a placeholder demonstrating blockchain interaction. The core assistant logic remains off-chain for CLI execution.
+
+
+---
+
+## ✅ Folder Structure After Change
+
+cyber-assistant/
+├── dfx.json
+├── src/
+│ └── log_canister/
+│ └── main.mo
+...
+
+
+---
+
+## ✅ Step 4: Quick Validation Commands
+
+To test it locally:
+
+```bash
+dfx start --background
+dfx deploy
+dfx canister call log_canister log '( "Boot event: CLI assistant running." )'
+
+
 
