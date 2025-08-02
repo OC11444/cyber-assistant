@@ -1,1 +1,28 @@
-.env
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.log
+
+# Virtual env
+venv/
+env/
+
+# Editor settings
+.vscode/
+.idea/
+*.code-workspace
+
+# OS
+.DS_Store
+
+# Audio model
+vosk-model-small-en-us-0.15/
+
+# Bytecode
+*.pyo
+*.pyd
+
+# Backup
+*.bak
+*.swp
