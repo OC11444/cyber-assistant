@@ -1,3 +1,4 @@
+assistant/core.py
 import os
 import sys
 import openai

@@ -1,0 +1,2 @@
+{"timestamp": "2025-08-04T08:25:05.041653", "command": "dfx canister list", "output": "Command 'dfx canister list' returned non-zero exit status 1."}
+{"timestamp": "2025-08-04T08:27:46.056886", "command": "dfx canister list", "output": "Command 'dfx canister list' returned non-zero exit status 1."}

@@ -26,3 +26,8 @@ vosk-model-small-en-us-0.15/
 # Backup
 *.bak
 *.swp
+venv/
+.env
+*.pyc
+__pycache__/
+.DS_Store

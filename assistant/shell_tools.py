@@ -5,16 +5,21 @@ import shutil
 import os
 import sys
 
-def run_shell_command(command):
+def run_shell_command(command, use_sudo=False):
     """
-    Executes a shell command and returns its output or error.
+    Executes a shell command with optional sudo and returns its output or error.
 
     Args:
         command (str): Shell command to run.
+        use_sudo (bool): Whether to prepend 'sudo' if not present.
 
     Returns:
         str: Output or error message.
     """
+    # Add sudo only if it's not already there and use_sudo is requested
+    if use_sudo and not command.strip().startswith("sudo"):
+        command = f"sudo {command.strip()}"
+
     try:
         result = subprocess.run(
             command,

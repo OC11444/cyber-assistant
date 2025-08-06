@@ -6,21 +6,50 @@ import re
 import subprocess
 import sys
 from dotenv import load_dotenv
+from core.secure_mode import filter_unethical_commands, explain_rejection
+from core import secure_mode
+from core.command_processor import should_abort_due_to_unsafe_input
+# === ICP Integration ===
+from core.icp import scan_canisters, canister_status
+#from handlers.icp_handler import run_icp_scan
+from handlers.icp_handler import handle_icp_command
+
+
+
+
 from assistant.shell_tools import list_available_tools
+from assistant.shell_tools import run_shell_command
 from assistant.ai_adapter import AIAdapter
 from adapters.text_adapter import get_text_input
 from adapters.voice_adapter import listen_for_command
+from adapters.log_adapter import log_message
 from nova_voice.nova import speak_greeting
 from assistant.branding import print_brand 
-from assistant.branding import PROJECT_NAME, DESCRIPTION, OS_NAME,OS_NAME 
+from assistant.branding import PROJECT_NAME, DESCRIPTION, OS_NAME 
 #from assistant.branding import greet_once_per_run
 from shell_interface import execute_shell_command, explain_command
+
+
+# Inject the secure mode state into the module (monkey-patch)
+# Determine secure mode
+SECURE_MODE_ENABLED = "--secure" in sys.argv
+secure_mode.ENABLED = SECURE_MODE_ENABLED
+
+log_message("Assistant started")
+
+
 
  #++++====+++++# from assistant.branding import speak_greeting
 #greet_once_per_run()
 
 # === Setup ===
 load_dotenv()
+# Ensure log directory exists
+if not os.path.exists("logs"):
+    os.makedirs("logs")
+    with open("logs/icp_log.jsonl", "w") as f:
+        f.write("")  # Optionally initialize the file
+
 app = typer.Typer(help=f"-{OS_NAME }: Your Cybersecurity Assistant for {OS_NAME }")
 
 # ✅ Allow --demo to pass silently to sys.argv use python main.py --demo
@@ -38,6 +67,15 @@ if "--demo" in sys.argv:
     print("[🧪 DEMO] AIAdapter initialized in DEMO mode.")
 
 os.environ["DEMO_MODE"] = "true" if DEMO_MODE else "false"
+### secure mode detection for detecting destructive commands and blocking/warning of consequences oof running such commands
+SECURE_MODE = "--secure" in sys.argv
+if "--secure" in sys.argv:
+    sys.argv.remove("--secure")
+    print("[🔒 SECURE MODE] Unsafe commands will be blocked.")
+
+os.environ["SECURE_MODE"] = "true" if SECURE_MODE else "false"
+   
+
 
 # ✅ Instantiate AIAdapter here
 ai_adapter = AIAdapter(demo_mode=DEMO_MODE)
@@ -153,7 +191,7 @@ def extract_command_list(response: str) -> list[str]:
 # === Execute Command ===
 def execute_shell(command: str) -> str:
     """
-    Executes a command with sudo and returns its output.
+    Executes a command using the shell_tools helper with sudo in live mode.
 
     Args:
         command (str): Shell command to execute.
@@ -162,16 +200,11 @@ def execute_shell(command: str) -> str:
         str: Output from the shell command.
     """
     typer.secho(f"\n[💻] Running: {command}", fg=typer.colors.CYAN)
+
     if DEMO_MODE:
         return f"[DEMO MODE] Pretending to run: {command}"
-    try:
-        result = subprocess.run(
-            ["sudo"] + command.split(), capture_output=True, text=True
-        )
-        return result.stdout or result.stderr
-    except Exception as e:
-        return f"[❌] Execution failed: {str(e)}"
 
+    return run_shell_command(command, use_sudo=True)
 
 # === Safe Prompt (CI fallback) ===
 def safe_prompt(prompt_text: str, default: str = "text") -> str:
@@ -210,6 +243,16 @@ def start():
      # 🚀 Show branding at app start
     print_brand()
     speak_greeting()
+    if SECURE_MODE:
+       typer.secho("[🛡️ ICP] Secure scan of Internet Computer canisters...\n", fg=typer.colors.MAGENTA)
+       canisters = scan_canisters(secure_mode)
+       if canisters:
+          typer.echo(f"📦 Found {len(canisters)} canister(s):")
+          for cid in canisters:
+              typer.echo(f" - {cid}")
+       else:
+        typer.secho("[⚠️] No canisters found or scan failed.", fg=typer.colors.RED)
+
 
 
 
@@ -219,7 +262,11 @@ def start():
     
 
     typer.echo(f"\n🧠 Welcome to -{PROJECT_NAME}! Your AI Cybersecurity Assistant 🛡️")
+    if SECURE_MODE:
+       typer.secho("🔒 Secure Mode Enabled: Command filtering active.\n", fg=typer.colors.YELLOW)
+
     tools = ["nmap", "sqlmap", "whois", "hydra", "theHarvester"]
+
 
     if not DEMO_MODE:
        typer.echo("\n🔍 Checking available tools...\n")
@@ -248,9 +295,26 @@ def start():
             continue
 
         query = get_text_input() if mode == "text" else listen_for_command()
+        log_message(f"User said: {query}")
+
         if not query:
             typer.echo("[⚠️] No input received.")
             continue
+        
+                # === Handle ICP commands early ===
+        icp_response = handle_icp_command(query, secure_mode=SECURE_MODE)
+        if not icp_response.startswith("[ERROR] ICP command not recognized."):
+            typer.secho(f"\n🌐 ICP Response:\n{icp_response}", fg=typer.colors.MAGENTA)
+            continue  # Skip GPT processing if handled by ICP
+
+
+            
+        # Check for dangerous commands before GPT suggestion
+        if should_abort_due_to_unsafe_input(query, SECURE_MODE):
+           continue
+
+        
+
 
         if query.strip().lower() in ("exit", "quit"):
             typer.secho("\n👋 Exiting Parrot-GPT. Goodbye!", fg=typer.colors.YELLOW)
@@ -259,6 +323,8 @@ def start():
         typer.secho(f"\n[📨] Sending this to GPT:\n{query}", fg=typer.colors.BLUE)
 
         response = ask_gpt(query)
+        log_message(f"LLM suggested: {response}")
+
         typer.secho(f"\n🤖 GPT Suggestions:\n{response}", fg=typer.colors.CYAN)
 
         commands = extract_command_list(response)
@@ -278,15 +344,25 @@ def start():
 
         try:
             command = commands[int(selected.strip()) - 1]
+            log_message(f"User chose command: {command}")
+
         except (IndexError, ValueError):
             typer.secho("[❌] Invalid selection.", fg=typer.colors.RED)
             continue
+        if SECURE_MODE:
+            if not filter_unethical_commands(command):
+                typer.secho(explain_rejection(command), fg=typer.colors.RED)
+                continue
+
 
         # Execute and explain
         output = execute_shell(command)
+        log_message(f"Execution output: {output}")
+
         explanation_prompt = (
             f"The command `{command}` returned:\n\n{output}\n\nExplain this clearly."
         )
+
 
         if DEMO_MODE:
             explanation = (
